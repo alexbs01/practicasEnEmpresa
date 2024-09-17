@@ -1,8 +1,5 @@
-package com.example.demo.model.entities;
+package com.example.demo.entitites;
 
-import com.example.demo.model.entities.Ciudad;
-import com.example.demo.model.entities.SedeJjooId;
-import com.example.demo.model.entities.TipoJjoo;
 import jakarta.persistence.*;
 
 @Entity
