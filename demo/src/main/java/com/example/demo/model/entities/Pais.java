@@ -5,19 +5,52 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity(name = "pais")
+@Entity
 @Table(name = "pais")
-
 public class Pais {
     @Id
-    private int id;
+    @Column(name = "ID_PAIS", nullable = false)
+    private Integer id;
 
-    @Column(name = "NOMBRE_PAIS", length = 64, nullable = false)
-    private String name;
+    @Column(name = "NOMBRE_PAIS", nullable = false, length = 64)
+    private String nombrePais;
 
-    @Column(name = "CODIGO_PAIS", length = 2, nullable = false)
-    private String code;
+    @Column(name = "CODIGO_PAIS", nullable = false, length = 2)
+    private String codigoPais;
 
-    @Column(name = "VALOR_PAIS")
-    private int value;
+    @Column(name = "VALOR_PAIS", nullable = false)
+    private Integer valorPais;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombrePais() {
+        return nombrePais;
+    }
+
+    public void setNombrePais(String nombrePais) {
+        this.nombrePais = nombrePais;
+    }
+
+    public String getCodigoPais() {
+        return codigoPais;
+    }
+
+    public void setCodigoPais(String codigoPais) {
+        this.codigoPais = codigoPais;
+    }
+
+    public Integer getValorPais() {
+        return valorPais;
+    }
+
+    public void setValorPais(Integer valorPais) {
+        this.valorPais = valorPais;
+    }
+
 }
