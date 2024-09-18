@@ -23,6 +23,12 @@ public class PaisService {
     }
 
     public Pais savePais(Pais pais){
+        // If the country exists return the instance
+        if(repository.findByNombre(pais.getNombrePais()).isPresent() ||
+                repository.findByCodigo(pais.getCodigoPais()).isPresent()) {
+            return repository.findByCodigo(pais.getCodigoPais()).get();
+        }
+
         int newId = repository.findAll().getLast().getId() + 1;
         pais.setId(newId);
         return repository.save(pais);
