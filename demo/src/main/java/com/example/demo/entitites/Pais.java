@@ -1,21 +1,27 @@
 package com.example.demo.entitites;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+
+import java.util.Objects;
 
 @Entity
 @Table(name = "pais")
 public class Pais {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_PAIS", nullable = false)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_PAIS")
     private Integer id;
 
-    @Column(name = "NOMBRE_PAIS", nullable = false, length = 64)
+    @JsonProperty("NOMBRE_PAIS")
+    @Column(name = "NOMBRE_PAIS", nullable = false, length = 64, unique = true)
     private String nombrePais;
 
-    @Column(name = "CODIGO_PAIS", nullable = false, length = 2)
+    @JsonProperty("CODIGO_PAIS")
+    @Column(name = "CODIGO_PAIS", nullable = false, length = 2, unique = true)
     private String codigoPais;
 
+    @JsonProperty("VALOR_PAIS")
     @Column(name = "VALOR_PAIS", nullable = false)
     private Integer valorPais;
 
@@ -50,5 +56,19 @@ public class Pais {
     public void setValorPais(Integer valorPais) {
         this.valorPais = valorPais;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pais pais = (Pais) o;
+        return Objects.equals(nombrePais, pais.nombrePais) && Objects.equals(codigoPais, pais.codigoPais);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombrePais, codigoPais);
+    }
+
 
 }

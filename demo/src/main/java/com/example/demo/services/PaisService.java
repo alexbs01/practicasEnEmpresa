@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class PaisService {
@@ -18,5 +20,11 @@ public class PaisService {
 
     public Pais getPaisById(Long id){
         return repository.findById(id).get();
+    }
+
+    public Pais savePais(Pais pais){
+        int newId = repository.findAll().getLast().getId() + 1;
+        pais.setId(newId);
+        return repository.save(pais);
     }
 }
