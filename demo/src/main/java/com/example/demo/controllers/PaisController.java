@@ -56,4 +56,11 @@ public class PaisController {
         }
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
+
+    @GetMapping("sedes")
+    public ResponseEntity<List<Object>> getSedes() {
+        List<Object> paises = paisService.findSedes();
+
+        return ResponseEntity.status(HttpStatus.OK).body(paises);
+    }
 }

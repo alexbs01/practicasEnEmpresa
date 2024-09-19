@@ -19,11 +19,9 @@ public class PaisService {
     }
 
     public Pais getPaisById(Long id){
-        if(repository.findById(id).isPresent()){
-            return repository.findById(id).get();
-        }
+        Optional<Pais> pais = repository.findById(id);
 
-        return null;
+        return pais.orElse(null);
     }
 
     public Pais savePais(Pais pais){
@@ -47,14 +45,26 @@ public class PaisService {
     }
 
     public Pais updatePais(long id, Pais pais){
-        if(repository.findById(id).isPresent()) {
-            repository.findById(id).get().setNombrePais(pais.getNombrePais());
-            repository.findById(id).get().setCodigoPais(pais.getCodigoPais());
-            repository.findById(id).get().setValorPais(pais.getValorPais());
 
-            return repository.save(repository.save(repository.findById(id).get()));
+        if( ! Validate.nombrePais(pais.getNombrePais()) ||
+            ! Validate.codigoPais(pais.getCodigoPais()) ||
+                repository.findById(id).isEmpty()) {
+            return null;
         }
 
-        return null;
+        Pais paisToUpdate = repository.findById(id).get();
+
+        paisToUpdate.setNombrePais(pais.getNombrePais());
+        paisToUpdate.setCodigoPais(pais.getCodigoPais());
+        paisToUpdate.setValorPais(pais.getValorPais());
+
+        return repository.save(repository.findById(id).get());
+
+    }
+
+    public List<Object> findSedes(){
+        Optional<List<Object>> result = repository.findCiudadesQueFueronSedes();
+
+        return result.orElse(null);
     }
 }

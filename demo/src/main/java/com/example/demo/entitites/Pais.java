@@ -3,13 +3,14 @@ package com.example.demo.entitites;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "pais")
 public class Pais {
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("ID_PAIS")
     @Column(name = "ID_PAIS")
     private Integer id;
 
