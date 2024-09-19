@@ -29,5 +29,5 @@ public interface PaisRepository extends JpaRepository<Pais, Long> {
             GROUP BY p.ID_PAIS, p.NOMBRE_PAIS, c.ID_CIUDAD,
                     c.VALOR_CIUDAD, tj.DESCRIPCION_TIPO;
             """, nativeQuery = true)
-    Optional<List<Object>> findCiudadesQueFueronSedes();
+    Optional<List<Object[]>> getNumeroSedesPorPais();
 }

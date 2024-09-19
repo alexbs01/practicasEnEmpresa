@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.entitites.Pais;
+import com.example.demo.repository.queries.NumeroSedesPorPaisDTO;
 import com.example.demo.services.PaisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,9 +59,11 @@ public class PaisController {
     }
 
     @GetMapping("sedes")
-    public ResponseEntity<List<Object>> getSedes() {
-        List<Object> paises = paisService.findSedes();
-
+    public ResponseEntity<List<NumeroSedesPorPaisDTO>> getSedes() {
+        List<NumeroSedesPorPaisDTO> paises = paisService.getSedesQuery();
+        System.out.println("AAAAAA");
+        System.out.println(paises.get(1));
+        System.out.println("BBBBBB");
         return ResponseEntity.status(HttpStatus.OK).body(paises);
     }
 }

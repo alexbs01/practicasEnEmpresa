@@ -2,12 +2,15 @@ package com.example.demo.services;
 
 import com.example.demo.entitites.Pais;
 import com.example.demo.repository.PaisRepository;
+import com.example.demo.repository.queries.NumeroSedesPorPaisDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PaisService {
@@ -62,9 +65,17 @@ public class PaisService {
 
     }
 
-    public List<Object> findSedes(){
-        Optional<List<Object>> result = repository.findCiudadesQueFueronSedes();
+    public List<NumeroSedesPorPaisDTO> getSedesQuery() {
+        Optional<List<Object[]>> result = repository.getNumeroSedesPorPais();
 
-        return result.orElse(null);
+        return result.orElse(new ArrayList<>()).stream()
+                .map(atrib -> new NumeroSedesPorPaisDTO(
+                        ((Number) atrib[0]).longValue(),
+                        (String) atrib[1],
+                        ((Number) atrib[2]).longValue(),
+                        ((Number) atrib[3]).longValue(),
+                        (String) atrib[4],
+                        ((Number) atrib[5]).longValue()
+                )).collect(Collectors.toList());
     }
 }
