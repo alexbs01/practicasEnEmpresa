@@ -11,11 +11,11 @@ import java.util.Optional;
 
 @Repository
 public interface PaisRepository extends JpaRepository<Pais, Long> {
-    @Query(value = "SELECT * FROM pais WHERE NOMBRE_PAIS = :nombre", nativeQuery = true)
-    Optional<Pais> findByNombre(@Param("nombre") String nombre);
+    //@Query(value = "SELECT * FROM pais WHERE NOMBRE_PAIS = :nombre", nativeQuery = true)
+    Pais findBynombrePais(String nombre);
 
-    @Query(value = "SELECT * FROM pais WHERE CODIGO_PAIS = :codigo", nativeQuery = true)
-    Optional<Pais> findByCodigo(@Param("codigo") String codigo);
+    //@Query(value = "SELECT * FROM pais WHERE CODIGO_PAIS = :codigo", nativeQuery = true)
+    Pais findBycodigoPais(String codigo);
 
     @Query(value = """
             SELECT p.ID_PAIS, p.NOMBRE_PAIS, c.ID_CIUDAD,

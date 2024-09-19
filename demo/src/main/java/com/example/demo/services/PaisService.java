@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,9 +28,9 @@ public class PaisService {
 
     public Pais savePais(Pais pais){
         // If the country exists return the instance
-        if(repository.findByNombre(pais.getNombrePais()).isPresent() ||
-                repository.findByCodigo(pais.getCodigoPais()).isPresent()) {
-            return repository.findByCodigo(pais.getCodigoPais()).get();
+        if(repository.findBynombrePais(pais.getNombrePais()) != null ||
+                repository.findBycodigoPais(pais.getCodigoPais()) != null) {
+            return repository.findBycodigoPais(pais.getCodigoPais());
         }
 
         // Set the new ID
@@ -42,9 +41,7 @@ public class PaisService {
     }
 
     public Pais findByCodigo(String codigo){
-        Optional<Pais> pais = repository.findByCodigo(codigo);
-
-        return pais.orElse(null);
+        return repository.findBycodigoPais(codigo);
     }
 
     public Pais updatePais(long id, Pais pais){
