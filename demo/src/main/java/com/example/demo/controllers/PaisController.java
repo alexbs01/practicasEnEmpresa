@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.List;
 
 @RestController
@@ -19,6 +18,7 @@ public class PaisController {
     @GetMapping("paises")
     public ResponseEntity<List<Pais>> getPais() {
         List<Pais> paises = paisService.getAllPaises();
+
         return ResponseEntity.status(HttpStatus.OK).body(paises);
     }
 
@@ -29,6 +29,7 @@ public class PaisController {
         if(pais != null) {
             return ResponseEntity.status(HttpStatus.OK).body(pais);
         }
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
@@ -52,18 +53,18 @@ public class PaisController {
     @PutMapping("paises/update/{id}")
     public ResponseEntity<Pais> updatePais(@PathVariable long id, @RequestBody Pais pais) {
         Pais savedPais = paisService.updatePais(id, pais);
+
         if (savedPais != null) {
             return ResponseEntity.status(HttpStatus.OK).body(savedPais);
         }
+
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
     @GetMapping("sedes")
     public ResponseEntity<List<NumeroSedesPorPaisDTO>> getSedes() {
         List<NumeroSedesPorPaisDTO> paises = paisService.getSedesQuery();
-        System.out.println("AAAAAA");
-        System.out.println(paises.get(1));
-        System.out.println("BBBBBB");
+
         return ResponseEntity.status(HttpStatus.OK).body(paises);
     }
 }
