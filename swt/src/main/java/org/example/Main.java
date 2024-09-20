@@ -1,7 +1,10 @@
 package org.example;
 
+import org.example.view.Gui;
+
 public class Main {
+
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        Gui.run();
     }
 }
