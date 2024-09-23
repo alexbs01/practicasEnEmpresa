@@ -41,29 +41,49 @@ public class Gui {
         // Grid para la columna derecha
         GridData gdRight = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 4);
 
+        GridData gdBottom = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
+
         // Retornar todos los países
-        Button b1 = new Button(shell, SWT.PUSH);
-        b1.setText("GetAllPaises");
-        b1.setLayoutData(gdLeft);
+        Button buttonGetAllPaises = new Button(shell, SWT.PUSH);
+        buttonGetAllPaises.setText("GetAllPaises");
+        buttonGetAllPaises.setLayoutData(gdLeft);
 
         // Label vacío para dejar libre la mitad derecha
-        Label label = new Label(shell, SWT.NONE);
-        label.setLayoutData(gdRight);
+        Table table = new Table (shell, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
+        table.setHeaderVisible (true);
+        table.setLayoutData(gdRight);
 
         // Buscar por id
-        Button b3 = new Button(shell, SWT.PUSH);
-        b3.setText("GetById");
-        b3.setLayoutData(gdLeft);
+        Button buttonGetById = new Button(shell, SWT.PUSH);
+        buttonGetById.setText("GetById");
+        buttonGetById.setLayoutData(gdLeft);
 
         // Hacer la Query
-        Button b4 = new Button(shell, SWT.PUSH);
-        b4.setText("Query del ejercicio 02");
-        b4.setLayoutData(gdLeft);
+        Button buttonQuery = new Button(shell, SWT.PUSH);
+        buttonQuery.setText("Query del ejercicio 02");
+        buttonQuery.setLayoutData(gdLeft);
 
-        //
-        Button b5 = new Button(shell, SWT.PUSH);
-        b5.setText("B5");
-        b5.setLayoutData(gdLeft);
+        // FindByCodigoPais
+        Button buttonFindByCodigoPais = new Button(shell, SWT.PUSH);
+        buttonFindByCodigoPais.setText("FindByCodigoPais");
+        buttonFindByCodigoPais.setLayoutData(gdLeft);
+
+        Text textId = new Text(shell, SWT.BORDER);
+        textId.setLayoutData(gdBottom);
+        textId.setMessage("ID");
+
+        Text textNombrePais = new Text(shell, SWT.BORDER);
+        textNombrePais.setLayoutData(gdBottom);
+        textNombrePais.setMessage("Nombre Pais");
+
+        Text textCodigoPais = new Text(shell, SWT.BORDER);
+        textCodigoPais.setLayoutData(gdBottom);
+        textCodigoPais.setMessage("Codigo Pais");
+
+        Text textValorPais = new Text(shell, SWT.BORDER);
+        textValorPais.setLayoutData(gdBottom);
+        textValorPais.setMessage("Valor Pais");
+
 
         shell.open();
 
