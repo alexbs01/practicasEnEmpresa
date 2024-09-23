@@ -9,10 +9,10 @@ import java.net.http.HttpResponse;
 public class Model {
     static String root = "http://localhost:8080/";
     static String allPaises = root + "paises";
-    static String paisById = root + allPaises + "/";
+    static String paisById = root + "paises/";
     static String paisAdd = root + "add";
-    static String paisByCodigo = root + "codigo" + "/";
-    static String paisUpdate = root + "update" + "/";
+    static String paisByCodigo = root + "codigo/";
+    static String paisUpdate = root + "update/";
     static String sedesQuery = root + "sedes";
 
     public static HttpResponse<String> getAllPaises() {
@@ -47,6 +47,28 @@ public class Model {
 
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response);
+
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return response;
+    }
+
+    public static HttpResponse<String> getSedes() {
+        HttpClient client = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(sedesQuery))
+                .GET()
+                .build();
+
+        HttpResponse<String> response;
+
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response);
 
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);

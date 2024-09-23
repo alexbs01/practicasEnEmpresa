@@ -88,19 +88,21 @@ public class Gui {
         SelectionAdapter selectionListener = new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-
+                table.removeAll();
+                table.update();
                 if (e.getSource() == buttonGetAllPaises) {
                     Controller.buttonGetAllPaises(table);
 
                 } else if (e.getSource() == buttonGetById) {
-                    Controller.buttonGetPaisById();
+                    Controller.buttonGetPaisById(table, textId.getText());
 
                 } else if (e.getSource() == buttonQuery) {
-                    Controller.buttonQuery();
+                    Controller.buttonQuery(table);
 
                 } else if (e.getSource() == buttonFindByCodigoPais) {
                     Controller.buttonFindByCodigPais();
                 }
+
             }
         };
 
