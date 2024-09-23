@@ -15,6 +15,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.*;
+import org.example.controller.Controller;
 
 
 public class Gui {
@@ -84,6 +85,29 @@ public class Gui {
         textValorPais.setLayoutData(gdBottom);
         textValorPais.setMessage("Valor Pais");
 
+        SelectionAdapter selectionListener = new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+
+                if (e.getSource() == buttonGetAllPaises) {
+                    Controller.buttonGetAllPaises(table);
+
+                } else if (e.getSource() == buttonGetById) {
+                    Controller.buttonGetPaisById();
+
+                } else if (e.getSource() == buttonQuery) {
+                    Controller.buttonQuery();
+
+                } else if (e.getSource() == buttonFindByCodigoPais) {
+                    Controller.buttonFindByCodigPais();
+                }
+            }
+        };
+
+        buttonGetAllPaises.addSelectionListener(selectionListener);
+        buttonGetById.addSelectionListener(selectionListener);
+        buttonQuery.addSelectionListener(selectionListener);
+        buttonFindByCodigoPais.addSelectionListener(selectionListener);
 
         shell.open();
 
