@@ -64,10 +64,10 @@ public class Gui {
         buttonQuery.setText("Query del ejercicio 02");
         buttonQuery.setLayoutData(gdLeft);
 
-        // FindByCodigoPais
-        Button buttonFindByCodigoPais = new Button(shell, SWT.PUSH);
-        buttonFindByCodigoPais.setText("FindByCodigoPais");
-        buttonFindByCodigoPais.setLayoutData(gdLeft);
+        // addPais
+        Button buttonAddPais = new Button(shell, SWT.PUSH);
+        buttonAddPais.setText("AddPais");
+        buttonAddPais.setLayoutData(gdLeft);
 
         Text textId = new Text(shell, SWT.BORDER);
         textId.setLayoutData(gdBottom);
@@ -99,8 +99,9 @@ public class Gui {
                 } else if (e.getSource() == buttonQuery) {
                     Controller.buttonQuery(table);
 
-                } else if (e.getSource() == buttonFindByCodigoPais) {
-                    Controller.buttonFindByCodigPais();
+                } else if (e.getSource() == buttonAddPais) {
+                    Controller.buttonAddPais(table, textNombrePais.getText(),
+                            textCodigoPais.getText(), textValorPais.getText());
                 }
 
             }
@@ -109,7 +110,7 @@ public class Gui {
         buttonGetAllPaises.addSelectionListener(selectionListener);
         buttonGetById.addSelectionListener(selectionListener);
         buttonQuery.addSelectionListener(selectionListener);
-        buttonFindByCodigoPais.addSelectionListener(selectionListener);
+        buttonAddPais.addSelectionListener(selectionListener);
 
         shell.open();
 

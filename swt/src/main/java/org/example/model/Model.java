@@ -1,5 +1,7 @@
 package org.example.model;
 
+import org.example.controller.entities.Pais;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -69,6 +71,28 @@ public class Model {
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println(response);
+
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return response;
+    }
+
+    public static HttpResponse<String> addPais(String body) {
+        HttpClient client = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(paisAdd))
+                .header("Content-Type", "application/json") // Añadir cabecera para JSON
+                .POST(HttpRequest.BodyPublishers.ofString(body))
+                .build();
+
+        HttpResponse<String> response;
+
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println("Respuesta: " + response.body()); // Imprimir respuesta
 
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);

@@ -116,6 +116,51 @@ public class Controller {
         }
     }
 
-    public static void buttonAddPais() {}
+    public static void buttonAddPais(Table table, String nombre, String codigo, String valor) {
+        Pais pais = new Pais();
+
+        pais.setNOMBRE_PAIS(nombre);
+        pais.setCODIGO_PAIS(codigo);
+        pais.setVALOR_PAIS(Integer.parseInt(valor));
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonToSend = "";
+
+        try {
+            jsonToSend = objectMapper.writeValueAsString(pais);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Error al convertir el objeto a JSON", e);
+        }
+
+        System.out.println(jsonToSend);
+
+        String jsonString = Model.addPais(jsonToSend).body();
+
+        try {
+            Pais paisAdded = objectMapper.readValue(jsonString, new TypeReference<>() {});
+
+            String[] titles = {"ID_PAIS", "NOMBRE_PAIS", "CODIGO_PAIS", "VALOR_PAIS"};
+
+            for(String title : titles) {
+                TableColumn column = new TableColumn(table, SWT.NONE);
+                column.setText(title);
+            }
+
+
+            TableItem item = new TableItem(table, SWT.NONE);
+            item.setText(0, paisAdded.getID_PAIS());
+            item.setText(1, paisAdded.getNOMBRE_PAIS());
+            item.setText(2, paisAdded.getCODIGO_PAIS());
+            item.setText(3, String.valueOf(paisAdded.getVALOR_PAIS()));
+
+            for(int i = 0; i < titles.length; i++) {
+                table.getColumn(i).pack();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static void buttonFindByCodigPais() {}
 }
