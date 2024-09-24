@@ -14,18 +14,32 @@ import java.io.IOException;
 import java.util.List;
 
 public class Controller {
-    public static void buttonGetAllPaises(Table table) {
+    private static Controller instance;
+
+    private Controller() {
+    }
+
+    public static Controller getInstance() {
+        if (instance == null) {
+            instance = new Controller();
+        }
+
+        return instance;
+    }
+
+    public void buttonGetAllPaises(Table table) {
         String jsonString = Model.getAllPaises().body();
 
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
             // Deserializa el json en una lista de paises
-            List<Pais> paises = objectMapper.readValue(jsonString, new TypeReference<>() {});
+            List<Pais> paises = objectMapper.readValue(jsonString, new TypeReference<>() {
+            });
 
             String[] titles = {"ID_PAIS", "NOMBRE_PAIS", "CODIGO_PAIS", "VALOR_PAIS"};
 
-            for(String title : titles) {
+            for (String title : titles) {
                 TableColumn column = new TableColumn(table, SWT.NONE);
                 column.setText(title);
             }
@@ -38,7 +52,7 @@ public class Controller {
                 item.setText(3, String.valueOf(pais.getVALOR_PAIS()));
             }
 
-            for(int i = 0; i < titles.length; i++) {
+            for (int i = 0; i < titles.length; i++) {
                 table.getColumn(i).pack();
             }
 
@@ -48,22 +62,22 @@ public class Controller {
 
     }
 
-    public static void buttonGetPaisById(Table table, String id) {
+    public void buttonGetPaisById(Table table, String id) {
         String jsonString = Model.getPaisById(id).body();
 
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
             // Deserializa el json en una lista de paises
-            Pais pais = objectMapper.readValue(jsonString, new TypeReference<>() {});
+            Pais pais = objectMapper.readValue(jsonString, new TypeReference<>() {
+            });
 
             String[] titles = {"ID_PAIS", "NOMBRE_PAIS", "CODIGO_PAIS", "VALOR_PAIS"};
 
-            for(String title : titles) {
+            for (String title : titles) {
                 TableColumn column = new TableColumn(table, SWT.NONE);
                 column.setText(title);
             }
-
 
             TableItem item = new TableItem(table, SWT.NONE);
             item.setText(0, pais.getID_PAIS());
@@ -71,7 +85,7 @@ public class Controller {
             item.setText(2, pais.getCODIGO_PAIS());
             item.setText(3, String.valueOf(pais.getVALOR_PAIS()));
 
-            for(int i = 0; i < titles.length; i++) {
+            for (int i = 0; i < titles.length; i++) {
                 table.getColumn(i).pack();
             }
 
@@ -80,23 +94,24 @@ public class Controller {
         }
     }
 
-    public static void buttonQuery(Table table) {
+    public void buttonQuery(Table table) {
         String jsonString = Model.getSedes().body();
 
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
             // Deserializa el json en una lista de paises
-            List<Query02> result = objectMapper.readValue(jsonString, new TypeReference<>() {});
+            List<Query02> result = objectMapper.readValue(jsonString, new TypeReference<>() {
+            });
 
             String[] titles = {"ID_PAIS", "NOMBRE_PAIS", "ID_CIUDAD", "VALOR_CIUDAD", "DESCRIPCION_TIPO", "COUNT_SEDES"};
 
-            for(String title : titles) {
+            for (String title : titles) {
                 TableColumn column = new TableColumn(table, SWT.NONE);
                 column.setText(title);
             }
 
-            for(Query02 row : result) {
+            for (Query02 row : result) {
                 TableItem item = new TableItem(table, SWT.NONE);
                 item.setText(0, row.getID_PAIS());
                 item.setText(1, row.getNOMBRE_PAIS());
@@ -107,7 +122,7 @@ public class Controller {
             }
 
 
-            for(int i = 0; i < titles.length; i++) {
+            for (int i = 0; i < titles.length; i++) {
                 table.getColumn(i).pack();
             }
 
@@ -116,7 +131,7 @@ public class Controller {
         }
     }
 
-    public static void buttonAddPais(Table table, String nombre, String codigo, String valor) {
+    public void buttonAddPais(Table table, String nombre, String codigo, String valor) {
         Pais pais = new Pais();
 
         pais.setNOMBRE_PAIS(nombre);
@@ -124,29 +139,19 @@ public class Controller {
         pais.setVALOR_PAIS(Integer.parseInt(valor));
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonToSend = "";
+
+        String jsonString = Model.addPais(pais.toJson()).body();
 
         try {
-            jsonToSend = objectMapper.writeValueAsString(pais);
-
-        } catch (IOException e) {
-            throw new RuntimeException("Error al convertir el objeto a JSON", e);
-        }
-
-        System.out.println(jsonToSend);
-
-        String jsonString = Model.addPais(jsonToSend).body();
-
-        try {
-            Pais paisAdded = objectMapper.readValue(jsonString, new TypeReference<>() {});
+            Pais paisAdded = objectMapper.readValue(jsonString, new TypeReference<>() {
+            });
 
             String[] titles = {"ID_PAIS", "NOMBRE_PAIS", "CODIGO_PAIS", "VALOR_PAIS"};
 
-            for(String title : titles) {
+            for (String title : titles) {
                 TableColumn column = new TableColumn(table, SWT.NONE);
                 column.setText(title);
             }
-
 
             TableItem item = new TableItem(table, SWT.NONE);
             item.setText(0, paisAdded.getID_PAIS());
@@ -154,7 +159,7 @@ public class Controller {
             item.setText(2, paisAdded.getCODIGO_PAIS());
             item.setText(3, String.valueOf(paisAdded.getVALOR_PAIS()));
 
-            for(int i = 0; i < titles.length; i++) {
+            for (int i = 0; i < titles.length; i++) {
                 table.getColumn(i).pack();
             }
 
@@ -162,5 +167,7 @@ public class Controller {
             e.printStackTrace();
         }
     }
-    public static void buttonFindByCodigPais() {}
+
+    public void buttonFindByCodigPais() {
+    }
 }

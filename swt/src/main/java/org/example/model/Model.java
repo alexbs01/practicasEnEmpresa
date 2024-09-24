@@ -1,7 +1,5 @@
 package org.example.model;
 
-import org.example.controller.entities.Pais;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -12,7 +10,7 @@ public class Model {
     static String root = "http://localhost:8080/";
     static String allPaises = root + "paises";
     static String paisById = root + "paises/";
-    static String paisAdd = root + "add";
+    static String paisAdd = root + "paises/add";
     static String paisByCodigo = root + "codigo/";
     static String paisUpdate = root + "update/";
     static String sedesQuery = root + "sedes";
@@ -70,7 +68,7 @@ public class Model {
 
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println(response);
+            System.out.println(response.body());
 
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
@@ -81,10 +79,10 @@ public class Model {
 
     public static HttpResponse<String> addPais(String body) {
         HttpClient client = HttpClient.newHttpClient();
-
+        System.out.println(paisAdd + body);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(paisAdd))
-                .header("Content-Type", "application/json") // Añadir cabecera para JSON
+                .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(body))
                 .build();
 
@@ -92,7 +90,7 @@ public class Model {
 
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println("Respuesta: " + response.body()); // Imprimir respuesta
+            System.out.println("Respuesta: " + response.body());
 
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);

@@ -15,6 +15,14 @@ public class Pais {
     @JsonProperty("VALOR_PAIS")
     private int VALOR_PAIS;
 
+    public String toJson() {
+        return "{" +
+                "\"NOMBRE_PAIS\":\"" + NOMBRE_PAIS + "\"," +
+                "\"CODIGO_PAIS\":\"" + CODIGO_PAIS + "\"," +
+                "\"VALOR_PAIS\":" + VALOR_PAIS +
+                "}";
+    }
+
     public String getID_PAIS() {
         return ID_PAIS;
     }

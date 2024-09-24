@@ -1,19 +1,12 @@
 package org.example.view;
 
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.*;
 import org.example.controller.Controller;
 
@@ -37,7 +30,7 @@ public class Gui {
 
         // Grid para la columna izquierda
         GridData gdLeft = new GridData(SWT.FILL, SWT.FILL, false, true);
-        gdLeft.widthHint = WIDTH/3;
+        gdLeft.widthHint = WIDTH / 3;
 
         // Grid para la columna derecha
         GridData gdRight = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 4);
@@ -49,9 +42,9 @@ public class Gui {
         buttonGetAllPaises.setText("GetAllPaises");
         buttonGetAllPaises.setLayoutData(gdLeft);
 
-        // Label vacío para dejar libre la mitad derecha
-        Table table = new Table (shell, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
-        table.setHeaderVisible (true);
+        // Tabla
+        Table table = new Table(shell, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
+        table.setHeaderVisible(true);
         table.setLayoutData(gdRight);
 
         // Buscar por id
@@ -89,21 +82,25 @@ public class Gui {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 table.removeAll();
+                deleteColumns(table);
                 table.update();
+
+                Controller controller = Controller.getInstance();
+
                 if (e.getSource() == buttonGetAllPaises) {
-                    Controller.buttonGetAllPaises(table);
+                    controller.buttonGetAllPaises(table);
 
                 } else if (e.getSource() == buttonGetById) {
-                    Controller.buttonGetPaisById(table, textId.getText());
+                    controller.buttonGetPaisById(table, textId.getText());
 
                 } else if (e.getSource() == buttonQuery) {
-                    Controller.buttonQuery(table);
+                    controller.buttonQuery(table);
 
                 } else if (e.getSource() == buttonAddPais) {
-                    Controller.buttonAddPais(table, textNombrePais.getText(),
+                    controller.buttonAddPais(table, textNombrePais.getText(),
                             textCodigoPais.getText(), textValorPais.getText());
                 }
-
+                table.redraw();
             }
         };
 
@@ -127,6 +124,13 @@ public class Gui {
         int y = (screenBounds.height - height) / 2;
 
         return new Point(x, y);
+    }
+
+    private static void deleteColumns(Table table) {
+        TableColumn[] columns = table.getColumns();
+        for (TableColumn column : columns) {
+            column.dispose();
+        }
     }
 
 }
