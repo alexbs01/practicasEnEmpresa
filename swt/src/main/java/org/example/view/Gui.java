@@ -5,6 +5,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
@@ -13,10 +14,10 @@ import org.example.controller.Controller;
 
 public class Gui {
     static Display display = new Display();
-    static Shell shell = new Shell(display);
-    static GridLayout layout = new GridLayout();
 
     public static void run() {
+        Shell shell = new Shell(display);
+        GridLayout layout = new GridLayout();
         final int NUM_COLS_LAYOUT = 3;
         final int WIDTH = (int) (display.getBounds().width * 0.7);
         final int HEIGHT = (int) (display.getBounds().height * 0.7);
@@ -91,7 +92,8 @@ public class Gui {
                     controller.buttonGetAllPaises(table);
 
                 } else if (e.getSource() == buttonGetById) {
-                    controller.buttonGetPaisById(table, textId.getText());
+                    String idToSearch = windowGetById();
+                    controller.buttonGetPaisById(table, idToSearch);
 
                 } else if (e.getSource() == buttonQuery) {
                     controller.buttonQuery(table);
@@ -116,6 +118,46 @@ public class Gui {
         }
 
         display.dispose();
+    }
+
+    private static String windowGetById() {
+        final String[] result = new String[1];  // Usamos un array para almacenar el valor capturado
+        Display display = Display.getDefault();  // Asegúrate de tener acceso a display
+        int width = 400;
+        int height = 300;
+
+        FillLayout layout = new FillLayout(SWT.VERTICAL);
+        Shell shell = new Shell(display);
+        shell.setText("Nueva Ventana");
+        shell.setSize(width, height);
+        shell.setLayout(layout);
+        shell.setLocation(centerScreen(width, height));
+
+        // Crear un campo de texto donde el usuario ingresará el ID
+        Text textId = new Text(shell, SWT.BORDER);
+        textId.setMessage("ID");
+
+        // Crear un botón que cerrará la ventana y retornará el valor
+        Button buttonInNewWindow = new Button(shell, SWT.PUSH);
+        buttonInNewWindow.setText("Aceptar");
+
+        // Listener del botón
+        buttonInNewWindow.addListener(SWT.Selection, event -> {
+            result[0] = textId.getText();  // Almacenar el valor escrito en el campo de texto
+            shell.dispose();               // Cerrar la ventana
+        });
+
+        shell.open();
+
+        // Mantener la ventana activa hasta que se cierre
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) {
+                display.sleep();
+            }
+        }
+
+        // Retornar el valor ingresado por el usuario
+        return result[0];
     }
 
     private static Point centerScreen(int width, int height) {

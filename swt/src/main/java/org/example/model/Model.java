@@ -7,15 +7,27 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class Model {
-    static String root = "http://localhost:8080/";
-    static String allPaises = root + "paises";
-    static String paisById = root + "paises/";
-    static String paisAdd = root + "paises/add";
-    static String paisByCodigo = root + "codigo/";
-    static String paisUpdate = root + "update/";
-    static String sedesQuery = root + "sedes";
+    private static final String root = "http://localhost:8080/";
+    private static final String allPaises = root + "paises";
+    private static final String paisById = root + "paises/";
+    private static final String paisAdd = root + "paises/add";
+    private static final String paisByCodigo = root + "codigo/";
+    private static final String paisUpdate = root + "update/";
+    private static final String sedesQuery = root + "sedes";
 
-    public static HttpResponse<String> getAllPaises() {
+    private static Model instance;
+
+    private Model() {
+    }
+
+    public static Model getInstance() {
+        if (instance == null) {
+            instance = new Model();
+        }
+        return instance;
+    }
+
+    public HttpResponse<String> getAllPaises() {
         HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -35,7 +47,7 @@ public class Model {
         return response;
     }
 
-    public static HttpResponse<String> getPaisById(String id) {
+    public HttpResponse<String> getPaisById(String id) {
         HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -56,7 +68,7 @@ public class Model {
         return response;
     }
 
-    public static HttpResponse<String> getSedes() {
+    public HttpResponse<String> getSedes() {
         HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -77,7 +89,7 @@ public class Model {
         return response;
     }
 
-    public static HttpResponse<String> addPais(String body) {
+    public HttpResponse<String> addPais(String body) {
         HttpClient client = HttpClient.newHttpClient();
         System.out.println(paisAdd + body);
         HttpRequest request = HttpRequest.newBuilder()
