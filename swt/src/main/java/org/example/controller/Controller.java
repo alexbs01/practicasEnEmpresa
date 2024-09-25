@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eclipse.swt.SWT;
@@ -73,6 +74,24 @@ public class Controller {
         showPais(table, jsonString, objectMapper);
     }
 
+    public String[] getPaisByID(String id) {
+        if (someFieldIsEmpty(new String[]{id})) return new String[]{};
+
+        String jsonString = model.getPaisById(id).body();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            Pais pais = objectMapper.readValue(jsonString, new TypeReference<>() {
+            });
+
+            return new String[]{pais.getNOMBRE_PAIS(), pais.getCODIGO_PAIS(), String.valueOf(pais.getVALOR_PAIS())};
+
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void buttonQuery(Table table) {
         String jsonString = model.getSedes().body();
 
@@ -129,7 +148,20 @@ public class Controller {
         showPais(table, jsonString, objectMapper);
     }
 
-    public void buttonFindByCodigPais() {
+    public void buttonUpdatePais(Table table, String id, String[] paisData) {
+        if (someFieldIsEmpty(new String[]{id, paisData[0], paisData[1], paisData[2]})) return;
+
+        Pais pais = new Pais();
+        pais.setNOMBRE_PAIS(paisData[0]);
+        pais.setCODIGO_PAIS(paisData[1]);
+        pais.setVALOR_PAIS(Integer.parseInt(paisData[2]));
+
+        String json = pais.toJson();
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String jsonString = model.updatePais(id, json).body();
+
+        showPais(table, jsonString, objectMapper);
     }
 
     private boolean someFieldIsEmpty(String[] fields) {

@@ -12,7 +12,7 @@ public class Model {
     private static final String paisById = root + "paises/";
     private static final String paisAdd = root + "paises/add";
     private static final String paisByCodigo = root + "codigo/";
-    private static final String paisUpdate = root + "update/";
+    private static final String paisUpdate = root + "paises/update/";
     private static final String sedesQuery = root + "sedes";
 
     private static Model instance;
@@ -91,11 +91,33 @@ public class Model {
 
     public HttpResponse<String> addPais(String body) {
         HttpClient client = HttpClient.newHttpClient();
-        System.out.println(paisAdd + body);
+
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(paisAdd))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(body))
+                .build();
+
+        HttpResponse<String> response;
+
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println("Respuesta: " + response.body());
+
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return response;
+    }
+
+    public HttpResponse<String> updatePais(String id, String body) {
+        HttpClient client = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(paisUpdate + id))
+                .header("Content-Type", "application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString(body))
                 .build();
 
         HttpResponse<String> response;

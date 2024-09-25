@@ -36,7 +36,7 @@ public class Gui {
         gdLeft.widthHint = WIDTH / 3;
 
         // Grid para la columna derecha
-        GridData gdRight = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 4);
+        GridData gdRight = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 5);
 
         GridData gdBottom = new GridData(SWT.FILL, SWT.FILL, true, false, 3, 1);
 
@@ -70,6 +70,11 @@ public class Gui {
         buttonAddPais.setText("AddPais");
         buttonAddPais.setLayoutData(gdLeft);
 
+        // updatePais
+        Button buttonUpdatePais = new Button(shell, SWT.PUSH);
+        buttonUpdatePais.setText("UpdatePais");
+        buttonUpdatePais.setLayoutData(gdLeft);
+
         SelectionAdapter selectionListener = new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -92,6 +97,14 @@ public class Gui {
                 } else if (e.getSource() == buttonAddPais) {
                     String[] paisData = windowAddPais();
                     controller.buttonAddPais(table, paisData[0], paisData[1], paisData[2]);
+                } else if (e.getSource() == buttonUpdatePais) {
+                    String id = windowGetById();
+                    if (id != null) {
+                        String[] paisData = controller.getPaisByID(id);
+                        String[] paisNewData = windowUpdatePais(paisData);
+                        controller.buttonUpdatePais(table, id, paisNewData);
+                    }
+
                 }
                 table.redraw();
             }
@@ -101,6 +114,7 @@ public class Gui {
         buttonGetById.addSelectionListener(selectionListener);
         buttonQuery.addSelectionListener(selectionListener);
         buttonAddPais.addSelectionListener(selectionListener);
+        buttonUpdatePais.addSelectionListener(selectionListener);
 
         shell.open();
 
@@ -176,7 +190,6 @@ public class Gui {
         textCodigoPais.setMessage("Codigo Pais");
 
         Text textValorPais = new Text(shell, SWT.BORDER);
-        //textValorPais.setLayoutData(gdBottom);
         textValorPais.setMessage("Valor Pais");
 
         Button buttonInNewWindow = new Button(shell, SWT.PUSH);
@@ -186,7 +199,57 @@ public class Gui {
             result[0] = textNombrePais.getText();
             result[1] = textCodigoPais.getText();
             result[2] = textValorPais.getText();
-            System.out.println("PAPAPAPPAA");
+            shell.dispose();
+        });
+
+        shell.open();
+
+        // Mantener la ventana activa hasta que se cierre
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) {
+                display.sleep();
+            }
+        }
+
+        // Retornar el valor ingresado por el usuario
+        return result;
+    }
+
+    private static String[] windowUpdatePais(String[] paisData) {
+        if (paisData.length == 0) return new String[0];
+
+        final String[] result = new String[3];  // Usamos un array para almacenar el valor capturado
+        Display display = Display.getDefault();  // Asegúrate de tener acceso a display
+        int width = 400;
+        int height = 300;
+
+        FillLayout layout = new FillLayout(SWT.VERTICAL);
+        layout.marginHeight = 20;
+        layout.marginWidth = 20;
+        layout.spacing = 20;
+
+        Shell shell = new Shell(display);
+        shell.setText("Add Pais");
+        shell.setSize(width, height);
+        shell.setLayout(layout);
+        shell.setLocation(centerScreen(width, height));
+
+        Text textNombrePais = new Text(shell, SWT.BORDER);
+        textNombrePais.setText(paisData[0]);
+
+        Text textCodigoPais = new Text(shell, SWT.BORDER);
+        textCodigoPais.setText(paisData[1]);
+
+        Text textValorPais = new Text(shell, SWT.BORDER);
+        textValorPais.setText(paisData[2]);
+
+        Button buttonInNewWindow = new Button(shell, SWT.PUSH);
+        buttonInNewWindow.setText("Aceptar");
+
+        buttonInNewWindow.addListener(SWT.Selection, event -> {
+            result[0] = textNombrePais.getText();
+            result[1] = textCodigoPais.getText();
+            result[2] = textValorPais.getText();
             shell.dispose();
         });
 
