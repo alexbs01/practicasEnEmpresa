@@ -64,6 +64,8 @@ public class Controller {
     }
 
     public void buttonGetPaisById(Table table, String id) {
+        if (someFieldIsEmpty(new String[]{id})) return;
+
         String jsonString = model.getPaisById(id).body();
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -109,6 +111,11 @@ public class Controller {
     }
 
     public void buttonAddPais(Table table, String nombre, String codigo, String valor) {
+
+        if (someFieldIsEmpty(new String[]{nombre, codigo, valor})) {
+            return;
+        }
+
         Pais pais = new Pais();
 
         pais.setNOMBRE_PAIS(nombre);
@@ -123,6 +130,14 @@ public class Controller {
     }
 
     public void buttonFindByCodigPais() {
+    }
+
+    private boolean someFieldIsEmpty(String[] fields) {
+        for (String field : fields) {
+            if (field == null || field.isEmpty()) return true;
+        }
+
+        return false;
     }
 
     private void showPais(Table table, String jsonString, ObjectMapper objectMapper) {
