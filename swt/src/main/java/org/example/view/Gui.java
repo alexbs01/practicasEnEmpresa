@@ -3,6 +3,8 @@ package org.example.view;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
@@ -47,6 +49,11 @@ public class Gui {
         Table table = new Table(shell, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
         table.setHeaderVisible(true);
         table.setLayoutData(gdRight);
+        Device device = Display.getCurrent();
+        Color background = new Color(device, 50, 50, 50);
+        Color foreground = new Color(device, 255, 255, 255);
+        table.setBackground(background);
+        table.setForeground(foreground);
 
         // Buscar por id
         Button buttonGetById = new Button(shell, SWT.PUSH);
@@ -62,22 +69,6 @@ public class Gui {
         Button buttonAddPais = new Button(shell, SWT.PUSH);
         buttonAddPais.setText("AddPais");
         buttonAddPais.setLayoutData(gdLeft);
-
-        Text textId = new Text(shell, SWT.BORDER);
-        textId.setLayoutData(gdBottom);
-        textId.setMessage("ID");
-
-        Text textNombrePais = new Text(shell, SWT.BORDER);
-        textNombrePais.setLayoutData(gdBottom);
-        textNombrePais.setMessage("Nombre Pais");
-
-        Text textCodigoPais = new Text(shell, SWT.BORDER);
-        textCodigoPais.setLayoutData(gdBottom);
-        textCodigoPais.setMessage("Codigo Pais");
-
-        Text textValorPais = new Text(shell, SWT.BORDER);
-        textValorPais.setLayoutData(gdBottom);
-        textValorPais.setMessage("Valor Pais");
 
         SelectionAdapter selectionListener = new SelectionAdapter() {
             @Override
@@ -99,8 +90,8 @@ public class Gui {
                     controller.buttonQuery(table);
 
                 } else if (e.getSource() == buttonAddPais) {
-                    controller.buttonAddPais(table, textNombrePais.getText(),
-                            textCodigoPais.getText(), textValorPais.getText());
+                    String[] paisData = windowAddPais();
+                    controller.buttonAddPais(table, paisData[0], paisData[1], paisData[2]);
                 }
                 table.redraw();
             }
@@ -127,24 +118,25 @@ public class Gui {
         int height = 300;
 
         FillLayout layout = new FillLayout(SWT.VERTICAL);
+        layout.marginHeight = 20;
+        layout.marginWidth = 20;
+        layout.spacing = 20;
+
         Shell shell = new Shell(display);
-        shell.setText("Nueva Ventana");
+        shell.setText("FindById");
         shell.setSize(width, height);
         shell.setLayout(layout);
         shell.setLocation(centerScreen(width, height));
 
-        // Crear un campo de texto donde el usuario ingresará el ID
         Text textId = new Text(shell, SWT.BORDER);
         textId.setMessage("ID");
 
-        // Crear un botón que cerrará la ventana y retornará el valor
         Button buttonInNewWindow = new Button(shell, SWT.PUSH);
         buttonInNewWindow.setText("Aceptar");
 
-        // Listener del botón
         buttonInNewWindow.addListener(SWT.Selection, event -> {
-            result[0] = textId.getText();  // Almacenar el valor escrito en el campo de texto
-            shell.dispose();               // Cerrar la ventana
+            result[0] = textId.getText();
+            shell.dispose();
         });
 
         shell.open();
@@ -158,6 +150,57 @@ public class Gui {
 
         // Retornar el valor ingresado por el usuario
         return result[0];
+    }
+
+    private static String[] windowAddPais() {
+        final String[] result = new String[3];  // Usamos un array para almacenar el valor capturado
+        Display display = Display.getDefault();  // Asegúrate de tener acceso a display
+        int width = 400;
+        int height = 300;
+
+        FillLayout layout = new FillLayout(SWT.VERTICAL);
+        layout.marginHeight = 20;
+        layout.marginWidth = 20;
+        layout.spacing = 20;
+
+        Shell shell = new Shell(display);
+        shell.setText("Add Pais");
+        shell.setSize(width, height);
+        shell.setLayout(layout);
+        shell.setLocation(centerScreen(width, height));
+
+        Text textNombrePais = new Text(shell, SWT.BORDER);
+        textNombrePais.setMessage("Nombre Pais");
+
+        Text textCodigoPais = new Text(shell, SWT.BORDER);
+        textCodigoPais.setMessage("Codigo Pais");
+
+        Text textValorPais = new Text(shell, SWT.BORDER);
+        //textValorPais.setLayoutData(gdBottom);
+        textValorPais.setMessage("Valor Pais");
+
+        Button buttonInNewWindow = new Button(shell, SWT.PUSH);
+        buttonInNewWindow.setText("Aceptar");
+
+        buttonInNewWindow.addListener(SWT.Selection, event -> {
+            result[0] = textNombrePais.getText();
+            result[1] = textCodigoPais.getText();
+            result[2] = textValorPais.getText();
+            System.out.println("PAPAPAPPAA");
+            shell.dispose();
+        });
+
+        shell.open();
+
+        // Mantener la ventana activa hasta que se cierre
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) {
+                display.sleep();
+            }
+        }
+
+        // Retornar el valor ingresado por el usuario
+        return result;
     }
 
     private static Point centerScreen(int width, int height) {
