@@ -180,6 +180,7 @@ public class Controller {
 
             String[] titles = {"ID_PAIS", "NOMBRE_PAIS", "CODIGO_PAIS", "VALOR_PAIS"};
 
+
             for (String title : titles) {
                 TableColumn column = new TableColumn(table, SWT.NONE);
                 column.setText(title);

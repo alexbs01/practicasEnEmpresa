@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Probando JS</title>
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Probando JS</h1>
+    <p>Este es un párrafo de prueba</p>
+
+    <input type="text" id="value1">
+    <select id="operation">
+        <option value="+">Sumar</option>
+        <option value="-">Restar</option>
+        <option value="*">Multiplicar</option>
+        <option value="/">Dividir</option>
+    </select>
+    <input type="text" id="value2">
+    <input type="submit" value="Operar" onclick="operation()">
+    <input type="submit" value="Restart" onclick="restart()">
+    <p id="result"></p>
+
+    <input type="text" id="textToRepeat">
+    <input type="text" id="timesToRepeat">
+    <input type="submit" value="Repeat" onclick="repeat()">
+    <p id="resultRepeat"></p>
+
+</body>
+
