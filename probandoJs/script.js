@@ -19,7 +19,7 @@ function operation() {
             break;
     }
 
-    document.getElementById('result').textContent = result;
+    document.getElementById('result').textContent = "Resultado: " + result;
 }
 
 function restart() {
@@ -32,10 +32,48 @@ function repeat() {
     let textToRepeat = document.getElementById('textToRepeat').value;
     let times = parseInt(document.getElementById('timesToRepeat').value);
     let result = '';
-    //document.getElementById('resultRepeat').innerHTML = '';
+
     for (let i = 0; i < times; i++) {
         result += textToRepeat + '<br>';
     }
 
     document.getElementById('resultRepeat').innerHTML = result;
 }
+
+function password() {
+    let password = document.getElementById('password').value;
+    
+    if(password === '1234') {
+        alert("Contraseña correcta");
+    } else {
+        alert("Contraseña incorrecta");
+    }
+}
+/*
+document.querySelector("html").addEventListener("click", () => {
+    alert("Ouch! Stop poking me!");
+});
+*/
+
+let myButton = document.querySelector("button");
+let myHeading = document.querySelector("h1");
+
+function setUserName() {
+    const myName = prompt("Please enter your name.");
+
+    if(!myName) {
+        setUserName();
+        return;
+    }
+
+    localStorage.setItem("name", myName);
+    myHeading.textContent = `Hello, ${myName}`;
+}
+
+if (!localStorage.getItem("name")) {
+    setUserName();
+} else {
+    const storedName = localStorage.getItem("name");
+    myHeading.textContent = `Mozilla is cool, ${storedName}`;
+}
+
