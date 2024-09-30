@@ -6,7 +6,7 @@ import ButtonUpdatePais from "./ButtonUpdatePais";
 import '../../index.css';
 
 import React, { useState } from 'react';
-import { handleGetAllPaises } from '../../controller/controller';
+import { handleGetAllPaises } from '../../controller/controller.js';
 
 function DivButtons({setPaises}) {
     return (
