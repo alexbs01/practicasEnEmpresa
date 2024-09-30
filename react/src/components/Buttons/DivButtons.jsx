@@ -3,12 +3,15 @@ import ButtonGetAllPaises from "./ButtonGetAllPaises";
 import ButtonGetById from "./ButtonGetById";
 import ButtonQuery from "./ButtonQuery";
 import ButtonUpdatePais from "./ButtonUpdatePais";
-import '../../App.css';
+import '../../index.css';
 
-function DivButtons() {
+import React, { useState } from 'react';
+import { handleGetAllPaises } from '../../controller/controller';
+
+function DivButtons({setPaises}) {
     return (
-        <div>
-            <ButtonGetAllPaises />
+        <div className="div-left">
+            <ButtonGetAllPaises  onClick={() => handleGetAllPaises(setPaises)}/>
             <ButtonGetById />
             <ButtonQuery />
             <ButtonAddPais />

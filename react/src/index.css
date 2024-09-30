@@ -1,0 +1,29 @@
+.div-left {
+    display: flex;
+    flex-direction: column;
+    width: 34%;
+    height: 100%;
+}
+
+.div-right {
+    display: flex;
+    flex-direction: column;
+    width: 66%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+button {
+    flex: 1;
+    text-align: center;
+    width: 100%;
+    margin: 0.5vh 0;
+}
+
+
+
+
+
+
+

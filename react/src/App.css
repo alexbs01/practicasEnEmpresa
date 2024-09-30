@@ -1,12 +1,12 @@
 #root {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	height: 100vh;
+	height: 98vh;
 }
 
-div {
-	flex-direction: column;
+html {
+	font-size: 62.5%;
+	overflow: hidden;
 }
-
