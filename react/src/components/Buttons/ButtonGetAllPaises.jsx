@@ -1,6 +1,6 @@
-function ButtonGetAllPaises() {
+function ButtonGetAllPaises({onClick}) {
     return (
-        <button className="button-left">
+        <button className="button-left" onClick={onClick}>
             Get All Paises
         </button>
     );

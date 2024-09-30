@@ -1,3 +1,5 @@
+import React from 'react';
+
 function TablePais({ paises }) {
     return (
         <table>
@@ -11,11 +13,12 @@ function TablePais({ paises }) {
             </thead>
             <tbody>
                 {paises.map((pais) => (
-                <tr key={pais.id}>
-                    <td>{pais.id}</td>
-                    <td>{pais.nombre}</td>
-                    <td>{pais.capital}</td>
-                </tr>
+                    <tr key={pais.ID_PAIS}>
+                        <td>{pais.ID_PAIS}</td>
+                        <td>{pais.NOMBRE_PAIS}</td>
+                        <td>{pais.CODIGO_PAIS}</td>
+                        <td>{pais.VALOR_PAIS}</td>
+                    </tr>
                 ))}
             </tbody>
         </table>
