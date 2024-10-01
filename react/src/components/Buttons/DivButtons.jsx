@@ -1,21 +1,17 @@
-import ButtonAddPais from "./ButtonAddPais";
-import ButtonGetAllPaises from "./ButtonGetAllPaises";
-import ButtonGetById from "./ButtonGetById";
-import ButtonQuery from "./ButtonQuery";
-import ButtonUpdatePais from "./ButtonUpdatePais";
+import Button from "./Button.jsx";
 import '../../index.css';
 
 import React, { useState } from 'react';
-import { handleGetAllPaises } from '../../controller/controller.js';
+import { handleGetAllPaises, handleGetSedes } from '../../controller/controller.js';
 
-function DivButtons({setPaises}) {
+function DivButtons({setPaises, setSedes}) {
     return (
         <div className="div-left">
-            <ButtonGetAllPaises  onClick={() => handleGetAllPaises(setPaises)}/>
-            <ButtonGetById />
-            <ButtonQuery />
-            <ButtonAddPais />
-            <ButtonUpdatePais />
+            <Button onClick={() => handleGetAllPaises(setPaises)} text="Get All Paises"/>
+            <Button onClick={() => handleGetAllPaises(setPaises)} text="Get By Id"/>
+            <Button onClick={() => handleGetSedes(setSedes)} text="Query"/>
+            <Button onClick={() => handleGetAllPaises(setPaises)} text="Add Pais"/>
+            <Button onClick={() => handleGetAllPaises(setPaises)} text="Update Pais"/>
         </div>
     );
 }
