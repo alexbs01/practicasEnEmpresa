@@ -4,11 +4,12 @@ import DivTable from './components/table/DivTable'
 import React, { useState } from 'react';
 
 function App() {
-    const [paises, setPaises] = useState([]);
+    const [data, setData] = useState([]);
+    const [tableType, setTableType] = useState('PAISES');
     return (
         <>
-            <DivButtons setPaises={setPaises}/>
-            <DivTable paises={paises}/>
+            <DivButtons setData={setData} setTableType={setTableType}/>
+            <DivTable data={data} tableType={tableType}/>
         </>
     )
 }

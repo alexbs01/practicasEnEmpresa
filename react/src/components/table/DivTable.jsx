@@ -1,9 +1,21 @@
-import TablePais from "./TablePais";
+import { TablePaises, TableSedes} from "./Table";
 
-function DivTable({ paises }) {
+function DivTable({ data, tableType }) {
+    const table = (tableType) => {
+        switch(tableType) {
+                case 'PAISES':
+                    return <TablePaises data={data} />;
+                case 'SEDES':
+                    return <TableSedes data={data} />;
+                default:
+                    return <p>No data</p>;
+        };
+    }
+    
+
     return (
         <div className="div-right">
-            {paises.length > 0 ? <TablePais paises={paises} /> : <p>No data</p>}
+            {table(tableType)}
         </div>
     );
 }

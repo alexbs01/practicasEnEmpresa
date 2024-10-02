@@ -1,6 +1,6 @@
 import React from 'react';
 
-function TablePais({ paises }) {
+function TablePaises({ data }) {
     return (
         <table>
             <thead>
@@ -12,12 +12,12 @@ function TablePais({ paises }) {
                 </tr>
             </thead>
             <tbody>
-                {paises.map((pais) => (
-                    <tr key={pais.ID_PAIS}>
-                        <td>{pais.ID_PAIS}</td>
-                        <td>{pais.NOMBRE_PAIS}</td>
-                        <td>{pais.CODIGO_PAIS}</td>
-                        <td>{pais.VALOR_PAIS}</td>
+                {data.map((element, index) => (
+                    <tr key={index}>
+                        <td>{element.ID_PAIS}</td>
+                        <td>{element.NOMBRE_PAIS}</td>
+                        <td>{element.CODIGO_PAIS}</td>
+                        <td>{element.VALOR_PAIS}</td>
                     </tr>
                 ))}
             </tbody>
@@ -25,7 +25,7 @@ function TablePais({ paises }) {
     );
 }
 
-function TableSedes({ sedes }) {
+function TableSedes({ data }) {
     return (
         <table>
             <thead>
@@ -39,13 +39,14 @@ function TableSedes({ sedes }) {
                 </tr>
             </thead>
             <tbody>
-                {sedes.map((sede) => (
-                    <tr key={sede.ID_PAIS}>
-                        <td>{sede.ID_PAIS}</td>
-                        <td>{sede.ID_CIUDAD}</td>
-                        <td>{sede.VALOR_CIUDAD}</td>
-                        <td>{sede.DESCRIPCION_TIPO}</td>
-                        <td>{sede.COUNT_SEDES}</td>
+                {data.map((element, index) => (
+                    <tr key={index}>
+                        <td>{element.ID_PAIS}</td>
+                        <td>{element.NOMBRE_PAIS}</td>
+                        <td>{element.ID_CIUDAD}</td>
+                        <td>{element.VALOR_CIUDAD}</td>
+                        <td>{element.DESCRIPCION_TIPO}</td>
+                        <td>{element.COUNT_SEDES}</td>
                     </tr>
                 ))}
             </tbody>
@@ -53,4 +54,4 @@ function TableSedes({ sedes }) {
     );
 }
 
-export default TablePais;
+export { TablePaises, TableSedes };

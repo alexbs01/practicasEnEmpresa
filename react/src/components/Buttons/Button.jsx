@@ -1,8 +1,11 @@
 function Button({onClick, text}) {
     return (
-        <button className="button-left" onClick={onClick}>
-            {text}
-        </button>
+        <div className="div-buttons">
+            <button className="buttons-left" onClick={onClick}>
+                {text}
+            </button>
+        </div>
+        
     );
 }
 

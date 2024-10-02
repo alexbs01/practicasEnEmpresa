@@ -1,35 +1,43 @@
-    .div-left {
-        display: flex;
-        flex-direction: column;
-        width: 34%;
-        height: 100%;
-    }
+.div-left {
+    display: flex;
+    flex-direction: column;
+    width: 34%;
+    height: 100%;
+}
 
-    .div-right {
-        display: flex;
-        flex-direction: column;
-        width: 66%;
-        height: 100%;
-        align-items: center;
-    }
+.div-right {
+    display: flex;
+    flex-direction: column;
+    width: 66%;
+    height: 100%;
+    align-items: center;
+}
 
-    button {
-        flex: 1;
-        text-align: center;
-        width: 100%;
-        margin: 0.5vh 0;
-    }
+.div-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 1.3em;
-    }
+.buttons-left {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    margin: 0.5vh 0;
+}
 
-    tbody {
-        width: 100%;
-    }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.3em;
+}
 
-    th, td {
-        text-align: center;
-    }
+tbody {
+    width: 100%;
+}
+
+th, td {
+    text-align: center;
+}
