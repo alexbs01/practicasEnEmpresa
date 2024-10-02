@@ -12,7 +12,7 @@ export const handleGetById = (setPaises, id) => {
     getPaisById(id)
         .then((data) => {
             console.log('Datos obtenidos:', data);
-            setPaises(data)})
+            setPaises([data])})
         .catch((error) => console.error('Error al obtener el país:', error));
 };
 
