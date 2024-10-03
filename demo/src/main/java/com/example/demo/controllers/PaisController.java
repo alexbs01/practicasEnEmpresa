@@ -15,6 +15,7 @@ public class PaisController {
     @Autowired
     private PaisService paisService;
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("paises")
     public ResponseEntity<List<Pais>> getPais() {
         List<Pais> paises = paisService.getAllPaises();
@@ -22,6 +23,7 @@ public class PaisController {
         return ResponseEntity.status(HttpStatus.OK).body(paises);
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("paises/{id}")
     public ResponseEntity<Pais> getPaisById(@PathVariable Long id) {
         Pais pais = paisService.getPaisById(id);
@@ -33,12 +35,14 @@ public class PaisController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("paises/add")
     public ResponseEntity<Pais> addPais(@RequestBody Pais pais) {
         Pais savedPais = paisService.savePais(pais);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedPais);
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("paises/codigo/{codigo}")
     public ResponseEntity<Pais> getPaisByCodigo(@PathVariable String codigo) {
         Pais pais = paisService.findByCodigo(codigo);
