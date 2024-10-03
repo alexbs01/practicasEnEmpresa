@@ -54,6 +54,7 @@ public class PaisController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @PutMapping("paises/update/{id}")
     public ResponseEntity<Pais> updatePais(@PathVariable long id, @RequestBody Pais pais) {
         Pais savedPais = paisService.updatePais(id, pais);
@@ -65,6 +66,7 @@ public class PaisController {
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("sedes")
     public ResponseEntity<List<NumeroSedesPorPaisDTO>> getSedes() {
         List<NumeroSedesPorPaisDTO> paises = paisService.getSedesQuery();
