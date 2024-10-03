@@ -1,19 +1,24 @@
-import { useState } from "react";
-import { Button, ButtonId, ButtonAddPais } from "./Button.jsx";
+import { Button, ButtonId, ButtonAddPais, ButtonUpdatePais } from "./Button.jsx";
 import '../../index.css';
 
-import { handleGetAllPaises, handleGetById, handleGetSedes, handleAddPais } from '../../controller/controller.js';
+import { handleGetAllPaises, handleGetById, handleGetSedes, handleAddPais, handleUpdatePais } from '../../controller/controller.js';
 
 function DivButtons({ setData, setTableType }) {
-    const handleSearch = (id) => {
-        handleGetById(setData, id);
+    const handleSearch = async (id) => {
+        const pais = await handleGetById(setData, id);
         setTableType('PAISES');
+        return pais;
     };
 
     const handleAdd = (nombre, codigo, valor) => {
         handleAddPais(setData, nombre, codigo, valor );
         setTableType('PAISES');
     };
+
+    const handleUpdate = (id, nombre, codigo, valor) => {
+        handleUpdatePais(setData, id, nombre, codigo, valor);
+        setTableType('PAISES');
+    }
 
     const handleButtonClick = (action) => {
         switch (action) {
@@ -40,7 +45,7 @@ function DivButtons({ setData, setTableType }) {
             <ButtonId handleSearch={handleSearch} />
             <Button onClick={() => handleButtonClick('QUERY_SEDES')} text="Query" />
             <ButtonAddPais handleAdd={handleAdd} />
-            <Button onClick={() => handleButtonClick('UPDATE_PAIS')} text="Update Pais" />
+            <ButtonUpdatePais handleUpdate={handleUpdate} handleSearch={handleSearch} />
         </div>
     );
 }

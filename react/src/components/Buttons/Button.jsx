@@ -43,19 +43,19 @@ function ButtonId({ handleSearch }) {
     );
 }
 
-// Botón con lógica para buscar por ID
+
 function ButtonAddPais({ handleAdd }) {
-    const [isSearching, setIsSearching] = useState(false);
+    const [isFormVisible, setFormVisible] = useState(false);
     const [nombrePais, setNombrePais] = useState('');
     const [codigoPais, setCodigoPais] = useState('');
     const [valorPais, setValorPais] = useState('');
 
-    const toggleSearch = () => setIsSearching(!isSearching);
+    const toggleFormVisible = () => setFormVisible(!isFormVisible);
 
     return (
         <div className="div-buttons">
-            {!isSearching ? (
-                <Button onClick={toggleSearch} text="Add pais" />
+            {!isFormVisible ? (
+                <Button onClick={toggleFormVisible} text="Add pais" />
             ) : (
                 <div className="div-id">
                     <div className="div-id-text">
@@ -83,7 +83,7 @@ function ButtonAddPais({ handleAdd }) {
                     
                     <div className="div-id-buttons">
                         <Button onClick={() => handleAdd(nombrePais, codigoPais, valorPais)} text="Añadir" />
-                        <Button onClick={toggleSearch} text="Cancelar" />
+                        <Button onClick={toggleFormVisible} text="Cancelar" />
                     </div>
                 </div>
             )}
@@ -91,6 +91,89 @@ function ButtonAddPais({ handleAdd }) {
     );
 }
 
+function ButtonUpdatePais({ handleUpdate, handleSearch }) {
+    const [formVisible, setFormVisible] = useState(0);
+    const [nombrePais, setNombrePais] = useState('');
+    const [codigoPais, setCodigoPais] = useState('');
+    const [valorPais, setValorPais] = useState('');
+    const [idPais, setIdPais] = useState('');
 
+    const toggleFormVisible = (newState) => setFormVisible(newState);
 
-export { Button, ButtonId, ButtonAddPais };
+    const handleSearchAndUpdateForm = async () => {
+        try {
+            const pais = await handleSearch(idPais);
+            console.log("Datos del país:", pais);
+    
+            if (pais && pais.ID_PAIS.toString() === idPais) {
+                setNombrePais(pais.NOMBRE_PAIS);
+                setCodigoPais(pais.CODIGO_PAIS);
+                setValorPais(pais.VALOR_PAIS);
+                toggleFormVisible(2);
+            } else {
+                alert("País no encontrado");
+            }
+        } catch (error) {
+            console.error("Error al buscar el país:", error);
+            alert("Ocurrió un error al buscar el país");
+        }
+    };
+
+    return (
+        <div className="div-buttons">
+            {formVisible === 0 ? (
+                <Button onClick={() => toggleFormVisible(1)} text="Update país" />
+            ) : formVisible === 1 ? (
+                <div className="div-id">
+                    <div className="div-id-text">
+                        <input
+                            type="text"
+                            value={idPais}
+                            onChange={(e) => setIdPais(e.target.value)}
+                            placeholder="ID País"
+                        />
+                    </div>
+                    <div className="div-id-buttons">
+                        <Button onClick={handleSearchAndUpdateForm} text="Buscar" />
+                        <Button onClick={() => toggleFormVisible(0)} text="Cancelar" />
+                    </div>
+                </div>
+            ) : formVisible === 2 && (
+                <div className="div-id">
+                    <div className="div-id-text">
+                        <input
+                            type="text"
+                            value={nombrePais}
+                            onChange={(e) => setNombrePais(e.target.value)}
+                            placeholder="Nombre País"
+                            defaultValue={nombrePais}
+                        />
+
+                        <input
+                            type="text"
+                            value={codigoPais}
+                            onChange={(e) => setCodigoPais(e.target.value)}
+                            placeholder="Código País"
+                            defaultValue={codigoPais}
+                        />
+
+                        <input
+                            type="text"
+                            value={valorPais}
+                            onChange={(e) => setValorPais(e.target.value)}
+                            placeholder="Valor País"
+                            defaultValue={valorPais}
+                        />
+                    </div>
+
+                    <div className="div-id-buttons">
+                        <Button onClick={() => handleUpdate(idPais, nombrePais, codigoPais, valorPais)} text="Actualizar" />
+                        <Button onClick={() => toggleFormVisible(0)} text="Cancelar" />
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+export { Button, ButtonId, ButtonAddPais, ButtonUpdatePais };
