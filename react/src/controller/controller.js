@@ -1,4 +1,4 @@
-import { getAllPaises, getPaisById, getSedes } from '../model/model.js';
+import { getAllPaises, getPaisById, getSedes, addPais } from '../model/model.js';
 
 export const handleGetAllPaises = (setPaises) => {
     getAllPaises()
@@ -23,3 +23,12 @@ export const handleGetSedes = (setSedes) => {
             setSedes(data)})  // Actualiza el estado con los datos obtenidos
         .catch((error) => console.error('Error al obtener las sedes:', error));
 };
+
+export const handleAddPais = (setPaises, nombre, codigo, valor) => {
+    addPais(nombre, codigo, valor)
+        .then((data) => {
+            console.log('País agregado:', data);
+            setPaises([data])
+        })
+        .catch((error) => console.error('Error al agregar el país:', error));
+}

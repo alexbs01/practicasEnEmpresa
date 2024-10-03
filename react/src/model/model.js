@@ -1,5 +1,7 @@
 const API_URL = 'http://localhost:8080/';
 const GET_BY_PAIS = API_URL + 'paises/';
+const GET_BY_SEDES = API_URL + 'sedes';
+const ADD_PAIS = API_URL + 'paises/add';
 
 // Obtener todos los países
 export async function getAllPaises() {
@@ -25,10 +27,28 @@ export async function getPaisById(id) {
 
 // Query
 export async function getSedes() {
-    const response = await fetch(`${API_URL}sedes`);
+    const response = await fetch(`${GET_BY_SEDES}`);
 
     if (!response.ok) {
         throw new Error('Error al obtener las sedes');
+    }
+
+    return await response.json();
+}
+
+// Agregar un país
+export async function addPais(NOMBRE_PAIS, CODIGO_PAIS, VALOR_PAIS) {
+    console.log(JSON.stringify({ NOMBRE_PAIS, CODIGO_PAIS, VALOR_PAIS }));
+    const response = await fetch(`${ADD_PAIS}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ NOMBRE_PAIS, CODIGO_PAIS, VALOR_PAIS }),
+    });
+
+    if (!response.ok) {
+        throw new Error('Error al agregar el país');
     }
 
     return await response.json();

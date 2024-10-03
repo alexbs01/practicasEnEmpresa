@@ -1,10 +1,20 @@
 import { useState } from "react";
-import { Button, ButtonId } from "./Button.jsx";
+import { Button, ButtonId, ButtonAddPais } from "./Button.jsx";
 import '../../index.css';
 
-import { handleGetAllPaises, handleGetById, handleGetSedes } from '../../controller/controller.js';
+import { handleGetAllPaises, handleGetById, handleGetSedes, handleAddPais } from '../../controller/controller.js';
 
 function DivButtons({ setData, setTableType }) {
+    const handleSearch = (id) => {
+        handleGetById(setData, id);
+        setTableType('PAISES');
+    };
+
+    const handleAdd = (nombre, codigo, valor) => {
+        handleAddPais(setData, nombre, codigo, valor );
+        setTableType('PAISES');
+    };
+
     const handleButtonClick = (action) => {
         switch (action) {
             case 'GET_ALL_PAISES':
@@ -24,17 +34,12 @@ function DivButtons({ setData, setTableType }) {
         }
     };
 
-    const handleSearch = (id) => {
-        handleGetById(setData, id);
-        setTableType('PAISES');
-    };
-
     return (
         <div className="div-left">
             <Button onClick={() => handleButtonClick('GET_ALL_PAISES')} text="Get All Paises" />
             <ButtonId handleSearch={handleSearch} />
             <Button onClick={() => handleButtonClick('QUERY_SEDES')} text="Query" />
-            <Button onClick={() => handleButtonClick('ADD_PAIS')} text="Add Pais" />
+            <ButtonAddPais handleAdd={handleAdd} />
             <Button onClick={() => handleButtonClick('UPDATE_PAIS')} text="Update Pais" />
         </div>
     );

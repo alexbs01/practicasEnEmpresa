@@ -38,10 +38,13 @@
 }
 
 .div-id-text {
+    display: flex;
+    flex-direction: column;
     width: 50%;
     height: 100%;
-    text-align: center;
-    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 1vh;
 }
 
 .div-id-buttons {
