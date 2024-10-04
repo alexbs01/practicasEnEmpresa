@@ -8,6 +8,7 @@ function App() {
     const [tableType, setTableType] = useState('PAISES');
     return (
         <>
+        
             <DivButtons setData={setData} setTableType={setTableType}/>
             <DivTable data={data} tableType={tableType}/>
         </>
