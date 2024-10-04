@@ -18,6 +18,12 @@ function ButtonId({ handleSearch }) {
 
     const toggleSearch = () => setIsSearching(!isSearching);
 
+    const doSearchAndReset = async (id) => {
+        const pais = await handleSearch(id);
+        setSearchId('');
+        toggleSearch();
+    }
+
     return (
         <div className="div-buttons">
             {!isSearching ? (
@@ -34,7 +40,7 @@ function ButtonId({ handleSearch }) {
                     </div>
                     
                     <div className="div-id-buttons">
-                        <Button onClick={() => handleSearch(searchId)} text="Buscar" />
+                        <Button onClick={() => doSearchAndReset(searchId)} text="Buscar" />
                         <Button onClick={toggleSearch} text="Cancelar" />
                     </div>
                 </div>
@@ -51,6 +57,14 @@ function ButtonAddPais({ handleAdd }) {
     const [valorPais, setValorPais] = useState('');
 
     const toggleFormVisible = () => setFormVisible(!isFormVisible);
+
+    const doAddAndReset = async (nombre, codigo, valor) => {
+        await handleAdd(nombre, codigo, valor);
+        setNombrePais('');
+        setCodigoPais('');
+        setValorPais('');
+        toggleFormVisible();
+    }
 
     return (
         <div className="div-buttons">
@@ -82,7 +96,7 @@ function ButtonAddPais({ handleAdd }) {
                     </div>
                     
                     <div className="div-id-buttons">
-                        <Button onClick={() => handleAdd(nombrePais, codigoPais, valorPais)} text="Añadir" />
+                        <Button onClick={() => doAddAndReset(nombrePais, codigoPais, valorPais)} text="Añadir" />
                         <Button onClick={toggleFormVisible} text="Cancelar" />
                     </div>
                 </div>
@@ -118,6 +132,15 @@ function ButtonUpdatePais({ handleUpdate, handleSearch }) {
             alert("Ocurrió un error al buscar el país");
         }
     };
+
+    const doUpdateAndReset = async (id, nombre, codigo, valor) => {
+        await handleUpdate(id, nombre, codigo, valor);
+        setIdPais('');
+        setNombrePais('');
+        setCodigoPais('');
+        setValorPais('');
+        toggleFormVisible(0);
+    }
 
     return (
         <div className="div-buttons">
@@ -167,7 +190,7 @@ function ButtonUpdatePais({ handleUpdate, handleSearch }) {
                     </div>
 
                     <div className="div-id-buttons">
-                        <Button onClick={() => handleUpdate(idPais, nombrePais, codigoPais, valorPais)} text="Actualizar" />
+                        <Button onClick={() => doUpdateAndReset(idPais, nombrePais, codigoPais, valorPais)} text="Actualizar" />
                         <Button onClick={() => toggleFormVisible(0)} text="Cancelar" />
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import { Button, ButtonId, ButtonAddPais, ButtonUpdatePais } from "./Button.jsx";
+import { Button, ButtonId, ButtonAddPais, ButtonUpdatePais } from './buttons.jsx';
 import '../../index.css';
 
 import { handleGetAllPaises, handleGetById, handleGetSedes, handleAddPais, handleUpdatePais } from '../../controller/controller.js';
