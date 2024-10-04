@@ -2,7 +2,7 @@ package com.example.demo.services;
 
 public class Validate {
     public static boolean nombrePais(String nombre) {
-        return nombre.matches("^[A-Za-z ]+$");
+        return nombre.matches("^[A-Za-z ñÑáéíóúÁÉÍÓÚ]+$");
     }
 
     public static boolean codigoPais(String codigo) {

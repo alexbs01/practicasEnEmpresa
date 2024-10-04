@@ -49,6 +49,8 @@ public class PaisService {
         if( ! Validate.nombrePais(pais.getNombrePais()) ||
             ! Validate.codigoPais(pais.getCodigoPais()) ||
                 repository.findById(id).isEmpty()) {
+
+            System.out.println("aafadfafa");
             return null;
         }
 
@@ -58,7 +60,7 @@ public class PaisService {
         paisToUpdate.setCodigoPais(pais.getCodigoPais());
         paisToUpdate.setValorPais(pais.getValorPais());
 
-        return repository.save(repository.findById(id).get());
+        return repository.save(paisToUpdate);
 
     }
 
