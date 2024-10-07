@@ -1,0 +1,72 @@
+.div-left {
+    display: flex;
+    flex-direction: column;
+    width: 34%;
+    height: 100%;
+}
+
+.div-right {
+    display: flex;
+    flex-direction: column;
+    width: 66%;
+    height: 100%;
+    align-items: center;
+    margin-left: 1vw;
+}
+
+.div-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
+
+.buttons-left {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    margin: 0.5vh 0;
+}
+
+.div-id {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.div-id-text {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 1vh;
+}
+
+.div-id-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.3em;
+}
+
+tbody {
+    width: 100%;
+}
+
+th, td {
+    text-align: center;
+}
