@@ -105,12 +105,12 @@ function ButtonAddPais({ handleAdd }) {
     );
 }
 
-function ButtonUpdatePais({ handleUpdate, handleSearch }) {
+function ButtonUpdatePais({ handleUpdate, handleSearch, pais1 }) {
     const [formVisible, setFormVisible] = useState(0);
-    const [nombrePais, setNombrePais] = useState('');
-    const [codigoPais, setCodigoPais] = useState('');
-    const [valorPais, setValorPais] = useState('');
-    const [idPais, setIdPais] = useState('');
+    const [nombrePais, setNombrePais] = useState(pais1.NOMBRE_PAIS);
+    const [codigoPais, setCodigoPais] = useState(pais1.CODIGO_PAIS);
+    const [valorPais, setValorPais] = useState(pais1.VALOR_PAIS);
+    const [idPais, setIdPais] = useState(pais1.ID_PAIS);
 
     const toggleFormVisible = (newState) => setFormVisible(newState);
 
@@ -120,9 +120,9 @@ function ButtonUpdatePais({ handleUpdate, handleSearch }) {
             console.log("Datos del país:", pais);
     
             if (pais && pais.ID_PAIS.toString() === idPais) {
-                setNombrePais(pais.NOMBRE_PAIS);
-                setCodigoPais(pais.CODIGO_PAIS);
-                setValorPais(pais.VALOR_PAIS);
+                setNombrePais(pais1.NOMBRE_PAIS);
+                setCodigoPais(pais1.CODIGO_PAIS);
+                setValorPais(pais1.VALOR_PAIS);
                 toggleFormVisible(2);
             } else {
                 alert("País no encontrado");

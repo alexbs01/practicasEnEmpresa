@@ -1,8 +1,8 @@
-package com.example.demo.services;
+package com.example.demo.services.jjoo;
 
-import com.example.demo.entitites.Pais;
-import com.example.demo.repository.PaisRepository;
-import com.example.demo.repository.queries.NumeroSedesPorPaisDTO;
+import com.example.demo.entitites.jjoo.Pais;
+import com.example.demo.repository.jjoo.PaisRepository;
+import com.example.demo.repository.jjoo.queries.NumeroSedesPorPaisDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
+@Service("paisServiceJJOO")
 public class PaisService {
     @Autowired
     private PaisRepository repository;
@@ -46,8 +46,8 @@ public class PaisService {
 
     public Pais updatePais(long id, Pais pais){
 
-        if( ! Validate.nombrePais(pais.getNombrePais()) ||
-            ! Validate.codigoPais(pais.getCodigoPais()) ||
+        if( ! ValidatePais.nombrePais(pais.getNombrePais()) ||
+            ! ValidatePais.codigoPais(pais.getCodigoPais()) ||
                 repository.findById(id).isEmpty()) {
 
             System.out.println("aafadfafa");

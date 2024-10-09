@@ -1,8 +1,8 @@
-package com.example.demo.controllers;
+package com.example.demo.controllers.jjoo;
 
-import com.example.demo.entitites.Pais;
-import com.example.demo.repository.queries.NumeroSedesPorPaisDTO;
-import com.example.demo.services.PaisService;
+import com.example.demo.entitites.jjoo.Pais;
+import com.example.demo.repository.jjoo.queries.NumeroSedesPorPaisDTO;
+import com.example.demo.services.jjoo.PaisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

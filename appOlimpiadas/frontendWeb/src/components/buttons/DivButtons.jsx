@@ -3,7 +3,7 @@ import '../../index.css';
 
 import { handleGetAllPaises, handleGetById, handleGetSedes, handleAddPais, handleUpdatePais } from '../../controller/controller.js';
 
-function DivButtons({ setData, setTableType }) {
+function DivButtons({ setData, setTableType, pais }) {
     const handleSearch = async (id) => {
         const pais = await handleGetById(setData, id);
         setTableType('PAISES');
@@ -45,7 +45,7 @@ function DivButtons({ setData, setTableType }) {
             <ButtonId handleSearch={handleSearch} />
             <Button onClick={() => handleButtonClick('QUERY_SEDES')} text="Query" />
             <ButtonAddPais handleAdd={handleAdd} />
-            <ButtonUpdatePais handleUpdate={handleUpdate} handleSearch={handleSearch} />
+            <ButtonUpdatePais handleUpdate={handleUpdate} handleSearch={handleSearch} pais1={pais}/>
         </div>
     );
 }

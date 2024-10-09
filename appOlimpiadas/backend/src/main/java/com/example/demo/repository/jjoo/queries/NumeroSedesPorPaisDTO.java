@@ -1,4 +1,4 @@
-package com.example.demo.repository.queries;
+package com.example.demo.repository.jjoo.queries;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

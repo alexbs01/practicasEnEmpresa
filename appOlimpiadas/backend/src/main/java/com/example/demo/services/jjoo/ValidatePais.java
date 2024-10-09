@@ -1,6 +1,6 @@
-package com.example.demo.services;
+package com.example.demo.services.jjoo;
 
-public class Validate {
+public class ValidatePais {
     public static boolean nombrePais(String nombre) {
         return nombre.matches("^[A-Za-z ñÑáéíóúÁÉÍÓÚ]+$");
     }

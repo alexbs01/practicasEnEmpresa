@@ -1,9 +1,8 @@
-package com.example.demo.entitites;
+package com.example.demo.entitites.jjoo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
