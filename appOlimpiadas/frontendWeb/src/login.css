@@ -1,0 +1,37 @@
+.mainDiv {
+    display: flex;
+    height: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15vh;
+}
+
+.paper, .paper-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1vh 0;
+}
+
+.div-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.div-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.paper-buttons {
+    width: 20vb;
+}
+
+.button {
+    width: 100%;
+}
