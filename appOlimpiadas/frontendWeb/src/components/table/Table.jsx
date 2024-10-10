@@ -6,31 +6,24 @@ import '@fontsource/roboto/700.css';
 import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
-import { useState } from 'react';
 
-function TablePaises({ data, setPais }) {
-    const [selectedRowId, setSelectedRowId] = useState(null);
-
+function TablePaises({ data }) {
     const columns = [
         { field: 'ID_PAIS', headerName: 'ID_PAIS', flex: 1 },
         { field: 'NOMBRE_PAIS', headerName: 'NOMBRE_PAIS', flex: 1 },
         { field: 'CODIGO_PAIS', headerName: 'CODIGO_PAIS', flex: 1 },
         { field: 'VALOR_PAIS', headerName: 'VALOR_PAIS', flex: 1, type: 'number' },
-    ];
+    ]
 
-    const rows = data.map((element, index) => ({
-        id: index,
-        ID_PAIS: element.ID_PAIS,
-        NOMBRE_PAIS: element.NOMBRE_PAIS,
-        CODIGO_PAIS: element.CODIGO_PAIS,
-        VALOR_PAIS: element.VALOR_PAIS,
-    }));
-
-    const handleRowSelection = (selectionModel) => {
-        setSelectedRowId(selectionModel[0]);
-    };
-
-    setPais();
+    const rows = data.map((element, index) => {
+        return {
+            id: index,
+            ID_PAIS: element.ID_PAIS,
+            NOMBRE_PAIS: element.NOMBRE_PAIS,
+            CODIGO_PAIS: element.CODIGO_PAIS,
+            VALOR_PAIS: element.VALOR_PAIS,
+        }
+    })
 
     return (
         <Paper style={{ height: '100%', width: '100%' }}>
@@ -42,7 +35,6 @@ function TablePaises({ data, setPais }) {
                 checkboxSelection
                 disableMultipleRowSelection
                 disableSelectionOnClick
-                onSelectionModelChange={handleRowSelection}
             />
         </Paper>
     );

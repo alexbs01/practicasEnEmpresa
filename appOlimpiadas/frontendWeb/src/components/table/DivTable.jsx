@@ -1,10 +1,10 @@
 import { TablePaises, TableSedes} from "./Table";
 
-function DivTable({ data, tableType, setPais }) {
+function DivTable({ data, tableType }) {
     const table = (tableType) => {
         switch(tableType) {
                 case 'PAISES':
-                    return <TablePaises data={data} setPais={setPais}/>;
+                    return <TablePaises data={data} />;
                 case 'SEDES':
                     return <TableSedes data={data} />;
                 default:
