@@ -13,7 +13,6 @@ public class LoginService {
     private LoginRepository repository;
 
     public List<Login> getAllLogins() {
-        repository.save(new Login("vaca", "leche"));
         return repository.findAll();
     }
 

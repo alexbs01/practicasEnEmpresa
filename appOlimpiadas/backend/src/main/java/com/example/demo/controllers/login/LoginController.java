@@ -23,7 +23,7 @@ public class LoginController {
             return new ResponseEntity<>(login, HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
     @CrossOrigin(origins = "http://localhost:5173")
@@ -32,5 +32,17 @@ public class LoginController {
         List<Login> loggins = loginService.getAllLogins();
 
         return new ResponseEntity<>(loggins, HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "https://localhost:5173")
+    @PostMapping("register")
+    public ResponseEntity<Login> registerUser(@RequestBody Login login) {
+        boolean userCanBeRegister = loginService.register(login);
+
+        if (userCanBeRegister) {
+            return new ResponseEntity<>(login, HttpStatus.CONFLICT);
+        }
+
+        return new ResponseEntity<>(login, HttpStatus.CREATED);
     }
 }
