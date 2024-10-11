@@ -20,6 +20,7 @@ export const handleLogin = async (setIsLogged, username, password) => {
         console.log('Login correcto');
     } catch (error) {
         console.error('Error al iniciar sesión:', error);
+        alert('Usuario o contraseña incorrectos');
     }
 }
 
@@ -32,7 +33,11 @@ export const handleRegister = async (username, password) => {
 
         await register(username, hashedPassword);
         console.log('Registro correcto');
+        return true;
+
     } catch (error) {
         console.error('Error al registrar el usuario:', error);
+        alert('Ya existe un usuario con ese nombre');
+        return false;
     }
 }

@@ -20,7 +20,17 @@ function Login({ toggleIsLogged }) {
     };
 
     const sendToHandleRegister = (username, password) => {
-        handleRegister(username, password);
+        const isRegistered = handleRegister(username, password);
+
+        if (isRegistered) {
+            return (<Snackbar
+                        anchorOrigin={{ vertical, horizontal }}
+                        open={open}
+                        onClose={handleClose}
+                        message="I love snacks"
+                        key={vertical + horizontal}
+                    />);
+        }
     };
 
     return (
@@ -65,7 +75,7 @@ function Login({ toggleIsLogged }) {
                         className='button' 
                         variant="outlined"
                         size='large'
-                        onClick={() => sendToHandleRegister(username, password)}> {/* Aquí envuelvo la función en otra función */}
+                        onClick={() => sendToHandleRegister(username, password)}>
                             Register
                     </Button>
                 </Paper>

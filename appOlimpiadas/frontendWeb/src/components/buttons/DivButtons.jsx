@@ -3,7 +3,7 @@ import { Button, ButtonId, ButtonAddPais, ButtonUpdatePais } from './buttons.jsx
 
 import { handleGetAllPaises, handleGetById, handleGetSedes, handleAddPais, handleUpdatePais } from '../../controller/jjoo/jjooController.js';
 
-function DivButtons({ setData, setTableType }) {
+function DivButtons({ setData, setTableType, logOut }) {
     const handleSearch = async (id) => {
         const pais = await handleGetById(setData, id);
         setTableType('PAISES');
@@ -46,6 +46,7 @@ function DivButtons({ setData, setTableType }) {
             <Button onClick={() => handleButtonClick('QUERY_SEDES')} text="Query" />
             <ButtonAddPais handleAdd={handleAdd} />
             <ButtonUpdatePais handleUpdate={handleUpdate} handleSearch={handleSearch} />
+            <Button onClick={() => logOut()} text="Log Out" />
         </div>
     );
 }

@@ -11,7 +11,7 @@ function Index() {
     }
 
     return (
-        isLogged ? <App /> : <Login toggleIsLogged={toggleIsLogged}/>
+        isLogged ? <App logOut={toggleIsLogged} /> : <Login toggleIsLogged={toggleIsLogged}/>
     );
 
 }

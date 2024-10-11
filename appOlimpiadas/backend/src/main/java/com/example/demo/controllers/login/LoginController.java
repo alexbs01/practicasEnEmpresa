@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 
 @RestController
@@ -34,15 +35,15 @@ public class LoginController {
         return new ResponseEntity<>(loggins, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "https://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("register")
     public ResponseEntity<Login> registerUser(@RequestBody Login login) {
         boolean userCanBeRegister = loginService.register(login);
 
         if (userCanBeRegister) {
-            return new ResponseEntity<>(login, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(login, HttpStatus.CREATED);
         }
 
-        return new ResponseEntity<>(login, HttpStatus.CREATED);
+        return new ResponseEntity<>(login, HttpStatus.CONFLICT);
     }
 }
