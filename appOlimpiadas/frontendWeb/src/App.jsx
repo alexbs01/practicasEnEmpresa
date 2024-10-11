@@ -1,4 +1,4 @@
-import './App.css'
+import './styles/App.css';
 import DivButtons from './components/buttons/DivButtons'
 import DivTable from './components/table/DivTable'
 import React, { useState } from 'react';

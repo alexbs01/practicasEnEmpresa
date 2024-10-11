@@ -1,4 +1,4 @@
-import { getAllPaises, getPaisById, getSedes, addPais, updatePais } from '../model/model.js';
+import { getAllPaises, getPaisById, getSedes, addPais, updatePais } from '../../model/jjoo/jjooModel.js';
 
 export const handleGetAllPaises = (setPaises) => {
     getAllPaises()

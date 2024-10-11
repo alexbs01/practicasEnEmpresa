@@ -1,7 +1,7 @@
+import '../../styles/index.css';
 import { Button, ButtonId, ButtonAddPais, ButtonUpdatePais } from './buttons.jsx';
-import '../../index.css';
 
-import { handleGetAllPaises, handleGetById, handleGetSedes, handleAddPais, handleUpdatePais } from '../../controller/controller.js';
+import { handleGetAllPaises, handleGetById, handleGetSedes, handleAddPais, handleUpdatePais } from '../../controller/jjoo/jjooController.js';
 
 function DivButtons({ setData, setTableType }) {
     const handleSearch = async (id) => {
