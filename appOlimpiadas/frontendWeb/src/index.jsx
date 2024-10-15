@@ -2,16 +2,13 @@ import React from 'react';
 import Login from './Login';
 import App from './App';
 import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
-function Index() {
-    const [isLogged, setIsLogged] = useState(false);
+function Index({ isLogged }) {
 
-    const toggleIsLogged = () => {
-        setIsLogged(!isLogged);
-    }
 
     return (
-        isLogged ? <App logOut={toggleIsLogged} /> : <Login toggleIsLogged={toggleIsLogged}/>
+        isLogged ? <Navigate to="/app" /> : <Navigate push to="/login" />
     );
 
 }

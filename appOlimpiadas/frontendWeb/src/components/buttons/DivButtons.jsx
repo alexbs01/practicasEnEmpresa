@@ -2,8 +2,9 @@ import '../../styles/index.css';
 import { Button, ButtonId, ButtonAddPais, ButtonUpdatePais } from './buttons.jsx';
 
 import { handleGetAllPaises, handleGetById, handleGetSedes, handleAddPais, handleUpdatePais } from '../../controller/jjoo/jjooController.js';
-
+import { useNavigate } from 'react-router-dom';
 function DivButtons({ setData, setTableType, logOut }) {
+    const navigate = useNavigate();
     const handleSearch = async (id) => {
         const pais = await handleGetById(setData, id);
         setTableType('PAISES');
@@ -46,7 +47,7 @@ function DivButtons({ setData, setTableType, logOut }) {
             <Button onClick={() => handleButtonClick('QUERY_SEDES')} text="Query" />
             <ButtonAddPais handleAdd={handleAdd} />
             <ButtonUpdatePais handleUpdate={handleUpdate} handleSearch={handleSearch} />
-            <Button onClick={() => logOut()} text="Log Out" />
+            <Button onClick={() => navigate("/login")} text="Log Out"/>
         </div>
     );
 }

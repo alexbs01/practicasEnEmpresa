@@ -10,27 +10,20 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import React, { useState } from 'react';
 import { handleLogin, handleRegister } from './controller/login/loginController';
+import { useNavigate } from 'react-router-dom';
 
 function Login({ toggleIsLogged }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const sendToHandleLogin = (username, password) => {
         handleLogin(toggleIsLogged, username, password);
+        navigate('/app');
     };
 
     const sendToHandleRegister = (username, password) => {
         const isRegistered = handleRegister(username, password);
-
-        if (isRegistered) {
-            return (<Snackbar
-                        anchorOrigin={{ vertical, horizontal }}
-                        open={open}
-                        onClose={handleClose}
-                        message="I love snacks"
-                        key={vertical + horizontal}
-                    />);
-        }
     };
 
     return (
