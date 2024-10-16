@@ -26,19 +26,29 @@ public class PaisService {
         return pais.orElse(null);
     }
 
-    public Pais savePais(Pais pais){
-        // If the country exists return the instance
-        if(repository.findBynombrePais(pais.getNombrePais()) != null ||
+    public Pais savePais(Pais pais) {
+        // Si el país ya existe, devolvemos la instancia existente
+        if (repository.findBynombrePais(pais.getNombrePais()) != null ||
                 repository.findBycodigoPais(pais.getCodigoPais()) != null) {
             return repository.findBycodigoPais(pais.getCodigoPais());
         }
 
-        // Set the new ID
-        int newId = repository.findAll().getLast().getId() + 1;
+        List<Pais> paises = repository.findAll();
+
+        int newId;
+
+        if (!paises.isEmpty()) {
+            newId = paises.get(paises.size() - 1).getId() + 1;
+        } else {
+            // Si no hay países se inserta el primero
+            newId = 1;
+        }
+
         pais.setId(newId);
 
         return repository.save(pais);
     }
+
 
     public Pais findByCodigo(String codigo){
         return repository.findBycodigoPais(codigo);
