@@ -22,7 +22,10 @@ function App() {
                             <App2 logOut={toggleIsLogged}/> 
                             : <Login toggleIsLogged={toggleIsLogged}/>
                     } 
-                />
+                >
+                    <Route path=":id" element={<App2 logOut={toggleIsLogged}/>}/>
+                    <Route path="*" element={<App2 logOut={toggleIsLogged}/>}/>
+                </Route>
             </Routes>
     )
 }

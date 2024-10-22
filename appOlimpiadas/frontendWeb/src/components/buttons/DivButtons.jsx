@@ -3,11 +3,17 @@ import { Button, ButtonId, ButtonAddPais, ButtonUpdatePais } from './buttons.jsx
 
 import { handleGetAllPaises, handleGetById, handleGetSedes, handleAddPais, handleUpdatePais } from '../../controller/jjoo/jjooController.js';
 import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+
 function DivButtons({ setData, setTableType, logOut }) {
     const navigate = useNavigate();
     const handleSearch = async (id) => {
         const pais = await handleGetById(setData, id);
         setTableType('PAISES');
+        
+        const navigate = useNavigate();
+        navigate(`/app/${id}`);
+        
         return pais;
     };
 
@@ -26,10 +32,12 @@ function DivButtons({ setData, setTableType, logOut }) {
             case 'GET_ALL_PAISES':
                 handleGetAllPaises(setData);
                 setTableType('PAISES');
+                navigate("/app/paises");
                 break;
             case 'QUERY_SEDES':
                 handleGetSedes(setData);
                 setTableType('SEDES');
+                navigate("/app/sedes");
                 break;
             case 'ADD_PAIS':
                 break;
