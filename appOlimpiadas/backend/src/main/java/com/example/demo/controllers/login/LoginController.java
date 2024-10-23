@@ -3,6 +3,7 @@ package com.example.demo.controllers.login;
 import com.example.demo.entitites.log.Log;
 import com.example.demo.entitites.login.Login;
 import com.example.demo.services.log.LogService;
+import com.example.demo.services.log.LogThread;
 import com.example.demo.services.login.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,13 +26,17 @@ public class LoginController {
     @PostMapping("login")
     public ResponseEntity<Login> logUser(@RequestBody Login login) {
         boolean isLogged = loginService.login(login);
+        String action = isLogged ? "Login correct" : "Login incorrect";
+
+        Log log = new Log(login.getUsername(), LocalDateTime.now(), action);
+
+        Thread logThread = new Thread(new LogThread(logService, log));
+        logThread.start();
 
         if (isLogged) {
-            logService.save(new Log(login.getUsername(), LocalDateTime.now(), "Login correct"));
             return new ResponseEntity<>(login, HttpStatus.OK);
         }
 
-        logService.save(new Log(login.getUsername(), LocalDateTime.now(), "Login incorrect"));
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
@@ -47,13 +52,17 @@ public class LoginController {
     @PostMapping("register")
     public ResponseEntity<Login> registerUser(@RequestBody Login login) {
         boolean userCanBeRegister = loginService.register(login);
+        String action = userCanBeRegister ? "Register correct" : "Register incorrect";
+
+        Log log = new Log(login.getUsername(), LocalDateTime.now(), action);
+
+        Thread logThread = new Thread(new LogThread(logService, log));
+        logThread.start();
 
         if (userCanBeRegister) {
-            logService.save(new Log(login.getUsername(), LocalDateTime.now(), "Register correct"));
             return new ResponseEntity<>(login, HttpStatus.CREATED);
         }
 
-        logService.save(new Log(login.getUsername(), LocalDateTime.now(), "Register incorrect"));
         return new ResponseEntity<>(login, HttpStatus.CONFLICT);
     }
 }

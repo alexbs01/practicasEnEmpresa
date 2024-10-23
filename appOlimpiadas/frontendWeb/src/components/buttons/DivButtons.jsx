@@ -3,7 +3,6 @@ import { Button, ButtonId, ButtonAddPais, ButtonUpdatePais } from './buttons.jsx
 
 import { handleGetAllPaises, handleGetById, handleGetSedes, handleAddPais, handleUpdatePais } from '../../controller/jjoo/jjooController.js';
 import { useNavigate } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
 
 function DivButtons({ setData, setTableType, logOut }) {
     const navigate = useNavigate();
@@ -11,9 +10,7 @@ function DivButtons({ setData, setTableType, logOut }) {
         const pais = await handleGetById(setData, id);
         setTableType('PAISES');
         
-        const navigate = useNavigate();
-        navigate(`/app/${id}`);
-        
+
         return pais;
     };
 
@@ -32,12 +29,10 @@ function DivButtons({ setData, setTableType, logOut }) {
             case 'GET_ALL_PAISES':
                 handleGetAllPaises(setData);
                 setTableType('PAISES');
-                navigate("/app/paises");
                 break;
             case 'QUERY_SEDES':
                 handleGetSedes(setData);
                 setTableType('SEDES');
-                navigate("/app/sedes");
                 break;
             case 'ADD_PAIS':
                 break;
@@ -55,7 +50,7 @@ function DivButtons({ setData, setTableType, logOut }) {
             <Button onClick={() => handleButtonClick('QUERY_SEDES')} text="Query" />
             <ButtonAddPais handleAdd={handleAdd} />
             <ButtonUpdatePais handleUpdate={handleUpdate} handleSearch={handleSearch} />
-            <Button onClick={() => navigate("/login")} text="Log Out"/>
+            <Button onClick={() => logOut()} text="Log Out"/>
         </div>
     );
 }
