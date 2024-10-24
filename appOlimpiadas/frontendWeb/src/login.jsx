@@ -1,4 +1,4 @@
-import './styles/login.css'
+import './styles/login.css';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -17,13 +17,38 @@ function Login({ toggleIsLogged }) {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
+    // Función para establecer una cookie
+    const setCookie = (name, value, days) => {
+        let expires = "";
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+
+        document.cookie = `${name}=${value}; SameSite=None; Secure; path=/; max-age=${60 * 60 * 24 * 70}`;
+    };
+    
+
+    // Función para eliminar una cookie
+    const eraseCookie = (name) => {
+        document.cookie = name + '=; Max-Age=-99999999;';
+    };
+
     const sendToHandleLogin = (username, password) => {
-        handleLogin(toggleIsLogged, username, password);
-        navigate('/app');
+        const isLoggedIn = handleLogin(() => toggleIsLogged(username), username, password);
+        if (isLoggedIn) {
+            // Si el login fue exitoso, guarda el nombre de usuario en una cookie
+            setCookie('user', username, 7); // La cookie durará 7 días
+            navigate('/app');
+        }
     };
 
     const sendToHandleRegister = (username, password) => {
         const isRegistered = handleRegister(username, password);
+        if (isRegistered) {
+            // Lógica después del registro, si es necesario
+        }
     };
 
     return (

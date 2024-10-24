@@ -6,29 +6,40 @@ import { useNavigate } from 'react-router-dom';
 
 function DivButtons({ setData, setTableType, logOut }) {
     const navigate = useNavigate();
+
+    const getCookie = (name) => {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i].trim();
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    };
+
     const handleSearch = async (id) => {
         const pais = await handleGetById(setData, id);
         setTableType('PAISES');
         
-
         return pais;
     };
-
+    
     const handleAdd = (nombre, codigo, valor) => {
         handleAddPais(setData, nombre, codigo, valor );
         setTableType('PAISES');
     };
-
+    
     const handleUpdate = (id, nombre, codigo, valor) => {
         handleUpdatePais(setData, id, nombre, codigo, valor);
         setTableType('PAISES');
     }
-
+    
     const handleButtonClick = (action) => {
         switch (action) {
             case 'GET_ALL_PAISES':
                 handleGetAllPaises(setData);
                 setTableType('PAISES');
+                console.log(getCookie('user'));
                 break;
             case 'QUERY_SEDES':
                 handleGetSedes(setData);

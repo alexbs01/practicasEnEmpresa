@@ -18,9 +18,11 @@ export const handleLogin = async (setIsLogged, username, password) => {
 
         await login(setIsLogged, username, hashedPassword);
         console.log('Login correcto');
+        return true;
     } catch (error) {
         console.error('Error al iniciar sesión:', error);
         alert('Usuario o contraseña incorrectos');
+        return false;
     }
 }
 
