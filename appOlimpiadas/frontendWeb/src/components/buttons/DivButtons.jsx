@@ -5,8 +5,6 @@ import { handleGetAllPaises, handleGetById, handleGetSedes, handleAddPais, handl
 import { useNavigate } from 'react-router-dom';
 
 function DivButtons({ setData, setTableType, logOut }) {
-    const navigate = useNavigate();
-
     const getCookie = (name) => {
         const nameEQ = name + "=";
         const ca = document.cookie.split(';');

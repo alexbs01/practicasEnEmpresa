@@ -6,7 +6,13 @@ const UPDATE_PAIS = API_URL + 'paises/update/';
 
 // Obtener todos los países
 export async function getAllPaises() {
-    const response = await fetch(`${API_URL}paises`);
+    const response = await fetch(`${API_URL}paises`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include'
+    });
 
     if (!response.ok) {
         throw new Error('Error al obtener los países');
@@ -17,7 +23,13 @@ export async function getAllPaises() {
 
 // Obtener un país por su ID
 export async function getPaisById(id) {
-    const response = await fetch(`${GET_BY_PAIS}${id}`);
+    const response = await fetch(`${GET_BY_PAIS}${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include'
+    });
 
     if (!response.ok) {
         throw new Error('Error al obtener el país');
@@ -28,7 +40,13 @@ export async function getPaisById(id) {
 
 // Query
 export async function getSedes() {
-    const response = await fetch(`${GET_BY_SEDES}`);
+    const response = await fetch(`${GET_BY_SEDES}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include'
+    });
 
     if (!response.ok) {
         throw new Error('Error al obtener las sedes');
@@ -45,6 +63,7 @@ export async function addPais(NOMBRE_PAIS, CODIGO_PAIS, VALOR_PAIS) {
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ NOMBRE_PAIS, CODIGO_PAIS, VALOR_PAIS }),
     });
 
@@ -57,11 +76,13 @@ export async function addPais(NOMBRE_PAIS, CODIGO_PAIS, VALOR_PAIS) {
 
 // Actualizar un país
 export async function updatePais(id, NOMBRE_PAIS, CODIGO_PAIS, VALOR_PAIS) {
+    console.log(JSON.stringify({ NOMBRE_PAIS, CODIGO_PAIS, VALOR_PAIS }));
     const response = await fetch(`${UPDATE_PAIS}${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ NOMBRE_PAIS, CODIGO_PAIS, VALOR_PAIS }),
     });
 
