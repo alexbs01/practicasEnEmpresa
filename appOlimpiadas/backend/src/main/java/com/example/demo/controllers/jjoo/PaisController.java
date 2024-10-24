@@ -28,6 +28,7 @@ public class PaisController {
     public ResponseEntity<Pais> getPaisById(@PathVariable Long id) {
         Pais pais = paisService.getPaisById(id);
 
+
         if(pais != null) {
             return ResponseEntity.status(HttpStatus.OK).body(pais);
         }

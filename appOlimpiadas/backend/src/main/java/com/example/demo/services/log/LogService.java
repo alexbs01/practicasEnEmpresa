@@ -11,6 +11,11 @@ public class LogService {
     private LogRepository logRepository;
 
     public void save(Log log) {
-        logRepository.save(log);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                logRepository.save(log);
+            }
+        }).start();
     }
 }

@@ -3,7 +3,6 @@ package com.example.demo.controllers.login;
 import com.example.demo.entitites.log.Log;
 import com.example.demo.entitites.login.Login;
 import com.example.demo.services.log.LogService;
-import com.example.demo.services.log.LogThread;
 import com.example.demo.services.login.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,9 +28,7 @@ public class LoginController {
         String action = isLogged ? "Login correct" : "Login incorrect";
 
         Log log = new Log(login.getUsername(), LocalDateTime.now(), action);
-
-        Thread logThread = new Thread(new LogThread(logService, log));
-        logThread.start();
+        logService.save(log);
 
         if (isLogged) {
             return new ResponseEntity<>(login, HttpStatus.OK);
@@ -55,9 +52,7 @@ public class LoginController {
         String action = userCanBeRegister ? "Register correct" : "Register incorrect";
 
         Log log = new Log(login.getUsername(), LocalDateTime.now(), action);
-
-        Thread logThread = new Thread(new LogThread(logService, log));
-        logThread.start();
+        logService.save(log);
 
         if (userCanBeRegister) {
             return new ResponseEntity<>(login, HttpStatus.CREATED);
