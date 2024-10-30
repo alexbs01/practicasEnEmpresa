@@ -28,7 +28,11 @@ public class LoginController {
         String action = isLogged ? "Login correct" : "Login incorrect";
 
         Log log = new Log(login.getUsername(), LocalDateTime.now(), action);
-        logService.save(log);
+        try {
+            logService.save(log);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         if (isLogged) {
             return new ResponseEntity<>(login, HttpStatus.OK);
@@ -52,7 +56,11 @@ public class LoginController {
         String action = userCanBeRegister ? "Register correct" : "Register incorrect";
 
         Log log = new Log(login.getUsername(), LocalDateTime.now(), action);
-        logService.save(log);
+        try {
+            logService.save(log);
+        } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+        }
 
         if (userCanBeRegister) {
             return new ResponseEntity<>(login, HttpStatus.CREATED);

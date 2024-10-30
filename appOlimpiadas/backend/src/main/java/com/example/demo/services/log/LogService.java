@@ -19,9 +19,11 @@ public class LogService {
         this.taskExecutor = taskExecutor;
     }
 
-    public void save(Log log) {
+    public void save(Log log) throws InterruptedException {
+
         Runnable runnable = () -> logRepository.save(log);
         taskExecutor.execute(runnable);
+
     }
 
 }

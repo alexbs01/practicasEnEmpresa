@@ -28,7 +28,11 @@ public class PaisController {
 
         if (user != null && !user.isEmpty()) {
             Log log = new Log(user, LocalDateTime.now(), "Get all paises");
-            logService.save(log);
+            try {
+                logService.save(log);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             System.out.println("No se encontró el usuario en la cookie");
         }
@@ -46,7 +50,11 @@ public class PaisController {
         if(pais != null) {
             if (user != null && !user.isEmpty()) {
                 Log log = new Log(user, LocalDateTime.now(), "Get pais by id");
-                logService.save(log);
+                try {
+                    logService.save(log);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 System.out.println("No se encontró el usuario en la cookie");
             }
@@ -63,7 +71,11 @@ public class PaisController {
 
         if (user != null && !user.isEmpty()) {
             Log log = new Log(user, LocalDateTime.now(), "Pais added");
-            logService.save(log);
+            try {
+                logService.save(log);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             System.out.println("No se encontró el usuario en la cookie");
         }
@@ -78,7 +90,11 @@ public class PaisController {
         if (pais != null) {
             if (user != null && !user.isEmpty()) {
                 Log log = new Log(user, LocalDateTime.now(), "Get pais by code");
-                logService.save(log);
+                try {
+                    logService.save(log);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 System.out.println("No se encontró el usuario en la cookie");
             }
@@ -86,7 +102,11 @@ public class PaisController {
         } else {
             if (user != null && !user.isEmpty()) {
                 Log log = new Log(user, LocalDateTime.now(), "Get pais by code");
-                logService.save(log);
+                try {
+                    logService.save(log);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 System.out.println("No se encontró el usuario en la cookie");
             }
@@ -101,7 +121,11 @@ public class PaisController {
 
         if (user != null && !user.isEmpty()) {
             Log log = new Log(user, LocalDateTime.now(), "Pais updated");
-            logService.save(log);
+            try {
+                logService.save(log);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             System.out.println("No se encontró el usuario en la cookie");
         }
@@ -120,7 +144,11 @@ public class PaisController {
 
         if (user != null && !user.isEmpty()) {
             Log log = new Log(user, LocalDateTime.now(), "Get sedes");
-            logService.save(log);
+            try {
+                logService.save(log);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             System.out.println("No se encontró el usuario en la cookie");
         }

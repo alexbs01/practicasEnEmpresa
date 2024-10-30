@@ -1,0 +1,286 @@
+openapi: 3.0.3
+info:
+  title: JJOO - OpenAPI 3.0
+  version: 1.0.11
+servers:
+  - url: https://localhost:8080
+tags:
+  - name: paises
+    description: Todo lo relacionado con Países
+  - name: login
+    description: Operaciones de inicio y registrado de sesión
+paths:
+  /paises/:
+    get:
+      tags:
+        - paises
+      summary: Busca todos los países
+      parameters:
+        - in: cookie
+          name: user
+          required: false
+          schema:
+            type: string
+            example: "usuarioEjemplo"
+          description: Cookie que contiene el nombre del usuario que realiza la solicitud
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paises'
+  
+  /paises/{id}:
+    get:
+      tags:
+        - paises
+      summary: Busca un pais por ID
+      parameters:
+        - name: id
+          in: path
+          description: Codigo del país a buscar
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - in: cookie
+          name: user
+          required: false
+          schema:
+            type: string
+            example: "usuarioEjemplo"
+          description: Cookie que contiene el nombre del usuario que realiza la solicitud
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pais'
+        '404':
+          description: Not found
+
+  /paises/codigo/{codigo}:
+    get:
+      tags:
+        - paises
+      summary: Busca un pais por código de país
+      parameters:
+        - name: codigo
+          in: path
+          description: Codigo del país a buscar
+          required: true
+          schema:
+            type: string
+        - in: cookie
+          name: user
+          required: false
+          schema:
+            type: string
+            example: "usuarioEjemplo"
+          description: Cookie que contiene el nombre del usuario que realiza la solicitud
+
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paises'
+        '404':
+          description: Not found
+  
+  /sedes/:
+    get:
+      tags:
+        - paises
+      summary: Busca las sedes de los JJOO
+      parameters:
+        - in: cookie
+          name: user
+          required: false
+          schema:
+            type: string
+            example: "usuarioEjemplo"
+          description: Cookie que contiene el nombre del usuario que realiza la solicitud
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sedes'
+  
+  /paises/add:
+    post:
+      tags:
+        - paises
+      summary: Añade un país a la base de datos
+      parameters:
+        - in: cookie
+          name: user
+          required: false
+          schema:
+            type: string
+            example: "usuarioEjemplo"
+          description: Cookie que contiene el nombre del usuario que realiza la solicitud
+      requestBody:
+        $ref: '#/components/requestBodies/Pais'
+        
+      responses:
+        '201':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pais'
+    
+  /paises/update/{id}:
+    put:
+      tags:
+        - paises
+      summary: Update user
+      parameters:
+        - name: id
+          in: path
+          description: Id del país a actualizar
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - in: cookie
+          name: user
+          required: false
+          schema:
+            type: string
+            example: "usuarioEjemplo"
+          description: Cookie que contiene el nombre del usuario que realiza la solicitud
+            
+      requestBody:
+        $ref: '#/components/requestBodies/Pais'
+      
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pais'
+        '304':
+          description: Not modified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pais'
+
+  /login:
+    post:
+      tags:
+        - login
+      summary: Inicia sesión en la aplicación
+      requestBody:
+        $ref: '#/components/requestBodies/Login'
+        
+      responses:
+        '200':
+          description: 'Login correcto'
+        '401':
+          description: 'Credenciales inválidas'
+  
+  /register:
+    post:
+      tags:
+        - login
+      summary: Inicia sesión en la aplicación
+      requestBody:
+        $ref: '#/components/requestBodies/Login'
+        
+      responses:
+        '201':
+          description: 'Registro correcto'
+        '409':
+          description: 'Nombre de usuario ya usado'
+
+components:
+  schemas:
+    Pais:
+      type: object
+      properties:
+        ID_PAIS:
+          type: integer
+          format: int64
+          example: 1
+        NOMBRE_PAIS:
+          type: string
+          example: "ESPAÑA"
+        CODIGO_PAIS:
+          type: string
+          example: "ES"
+        VALOR_PAIS:
+          type: integer
+          format: int64
+          example: 100
+    Paises:
+      type: array
+      items:
+        $ref: '#/components/schemas/Pais'
+    
+    Sedes:
+      type: array
+      items:
+        type: object
+        properties:
+          ID_PAIS:
+            type: integer
+            format: int64
+            example: 5
+          NOMBRE_PAIS:
+            type: string
+            example: "ITALIA"
+          ID_CIUDAD:
+            type: integer
+            format: int64
+            example: 12
+          VALOR_CIUDAD:
+            type: integer
+            format: int64
+            example: 190
+          DESCRIPCION_TIPO:
+            type: string
+            example: "INVIERNO"
+          COUNT_SEDES: 
+            type: integer
+            format: int64
+            example: 1
+  
+  requestBodies:
+    Pais:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              NOMBRE_PAIS:
+                type: string
+                example: "ESPAÑA"
+              CODIGO_PAIS:
+                type: string
+                example: "ES"
+              VALOR_PAIS:
+                type: integer
+                format: int64
+                example: 100
+    
+    Login:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                example: "vaca"
+              password:
+                type: string
+                example: "leche"
