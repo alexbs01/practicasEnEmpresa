@@ -3,7 +3,7 @@ info:
   title: JJOO - OpenAPI 3.0
   version: 1.0.11
 servers:
-  - url: https://localhost:8080
+  - url: http://localhost:8080
 tags:
   - name: paises
     description: Todo lo relacionado con Países
@@ -209,7 +209,6 @@ components:
       properties:
         ID_PAIS:
           type: integer
-          format: int64
           example: 1
         NOMBRE_PAIS:
           type: string
@@ -219,7 +218,6 @@ components:
           example: "ES"
         VALOR_PAIS:
           type: integer
-          format: int64
           example: 100
     Paises:
       type: array
@@ -233,25 +231,21 @@ components:
         properties:
           ID_PAIS:
             type: integer
-            format: int64
             example: 5
           NOMBRE_PAIS:
             type: string
             example: "ITALIA"
           ID_CIUDAD:
             type: integer
-            format: int64
             example: 12
           VALOR_CIUDAD:
             type: integer
-            format: int64
             example: 190
           DESCRIPCION_TIPO:
             type: string
             example: "INVIERNO"
           COUNT_SEDES: 
             type: integer
-            format: int64
             example: 1
   
   requestBodies:
@@ -269,7 +263,6 @@ components:
                 example: "ES"
               VALOR_PAIS:
                 type: integer
-                format: int64
                 example: 100
     
     Login:
