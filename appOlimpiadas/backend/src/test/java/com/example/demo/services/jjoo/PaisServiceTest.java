@@ -1,6 +1,8 @@
 package com.example.demo.services.jjoo;
 
 import com.example.demo.entitites.jjoo.Pais;
+import com.example.demo.mapper.PaisMapper;
+import com.example.demo.mapper.dto.PaisDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -13,6 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class PaisServiceTest {
     @Autowired
     private PaisService paisService;
+
+    @Autowired
+    private PaisMapper paisMapper;
 
     @Test
     void getAllPaises() {
@@ -45,17 +50,17 @@ class PaisServiceTest {
         pais.setNombrePais("ALEMANIA");
         pais.setCodigoPais("AL");
         pais.setValorPais(100);
-        Pais pais01 = paisService.savePais(pais);
+        PaisDTO pais01 = paisService.savePais(pais);
 
         pais.setNombrePais("CHINA");
         pais.setCodigoPais("CH");
         pais.setValorPais(1);
-        Pais pais02 = paisService.savePais(pais);
+        PaisDTO pais02 = paisService.savePais(pais);
 
         pais.setNombrePais("TURQUÍA");
         pais.setCodigoPais("TU");
         pais.setValorPais(50);
-        Pais pais03 = paisService.savePais(pais);
+        PaisDTO pais03 = paisService.savePais(pais);
 
         assertEquals(pais01.getNombrePais(), paisService.getPaisById(1L).getNombrePais());
         assertEquals(pais02.getCodigoPais(), paisService.getPaisById(2L).getCodigoPais());
@@ -71,22 +76,22 @@ class PaisServiceTest {
         pais.setCodigoPais("MX");
         pais.setValorPais(100);
 
-        Pais pais01 = paisService.savePais(pais);
-        Pais pais02 = paisService.savePais(pais);
+        PaisDTO pais01 = paisService.savePais(pais);
+        PaisDTO pais02 = paisService.savePais(pais);
 
         // Id del primer país
-        assertEquals(1, pais01.getId());
+        assertEquals(1, pais01.getIdPais());
 
         // Id de insertar un país existente
-        assertEquals(1, pais02.getId());
+        assertEquals(1, pais02.getIdPais());
 
         pais.setNombrePais("COLOMBIA");
         pais.setCodigoPais("CO");
         pais.setValorPais(1);
-        Pais pais03 = paisService.savePais(pais);
+        PaisDTO pais03 = paisService.savePais(pais);
 
         // Id del segundo país insertado
-        assertEquals(2, pais03.getId());
+        assertEquals(2, pais03.getIdPais());
 
         System.out.println(paisService.getAllPaises().size());
     }
@@ -98,17 +103,17 @@ class PaisServiceTest {
         pais.setNombrePais("ARGENTINA");
         pais.setCodigoPais("AR");
         pais.setValorPais(100);
-        Pais pais01 = paisService.savePais(pais);
+        PaisDTO pais01 = paisService.savePais(pais);
 
         pais.setNombrePais("VENEZUELA");
         pais.setCodigoPais("VZ");
         pais.setValorPais(1);
-        Pais pais02 = paisService.savePais(pais);
+        PaisDTO pais02 = paisService.savePais(pais);
 
         pais.setNombrePais("ITALIA");
         pais.setCodigoPais("IT");
         pais.setValorPais(50);
-        Pais pais03 = paisService.savePais(pais);
+        PaisDTO pais03 = paisService.savePais(pais);
 
         assertEquals(pais01.getNombrePais(), paisService.findByCodigo("AR").getNombrePais());
         assertEquals(pais02.getCodigoPais(), paisService.findByCodigo("VZ").getCodigoPais());
@@ -134,17 +139,17 @@ class PaisServiceTest {
         pais.setNombrePais("JAPÓN");
         pais.setCodigoPais("JP");
         pais.setValorPais(50);
-        Pais pais03 = paisService.savePais(pais);
+        PaisDTO pais03 = paisService.savePais(pais);
 
-        Pais newPais01 = paisService.findByCodigo("US");
+        PaisDTO newPais01 = paisService.findByCodigo("US");
         newPais01.setNombrePais("PORTUGAL");
         newPais01.setCodigoPais("PR");
 
-        Pais newPais02 = paisService.findByCodigo("CA");
+        PaisDTO newPais02 = paisService.findByCodigo("CA");
         newPais02.setValorPais(-200);
 
-        assertEquals("PORTUGAL", paisService.updatePais(1L, newPais01).getNombrePais());
-        assertEquals(-200, paisService.updatePais(2L, newPais02).getValorPais());
+        assertEquals("PORTUGAL", paisService.updatePais(1L, paisMapper.toPais(newPais01)).getNombrePais());
+        assertEquals(-200, paisService.updatePais(2L, paisMapper.toPais(newPais02)).getValorPais());
 
         System.out.println(paisService.getAllPaises().size());
     }

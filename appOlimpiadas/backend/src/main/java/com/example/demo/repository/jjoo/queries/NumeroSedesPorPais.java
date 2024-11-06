@@ -2,7 +2,7 @@ package com.example.demo.repository.jjoo.queries;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class NumeroSedesPorPaisDTO {
+public class NumeroSedesPorPais {
 
     @JsonProperty("ID_PAIS")
     private Integer ID_PAIS;
@@ -22,7 +22,7 @@ public class NumeroSedesPorPaisDTO {
     @JsonProperty("COUNT_SEDES")
     private Integer COUNT_SEDES;
 
-    public NumeroSedesPorPaisDTO(Integer idPais, String nombrePais,
+    public NumeroSedesPorPais(Integer idPais, String nombrePais,
                                  Integer idCiudad, Integer valorCiudad,
                                  String descripcionTipo, Integer countSedes) {
         this.ID_PAIS = idPais;

@@ -4,7 +4,7 @@ import com.example.demo.entitites.jjoo.Pais;
 import com.example.demo.entitites.log.Log;
 import com.example.demo.mapper.PaisMapper;
 import com.example.demo.mapper.dto.PaisDTO;
-import com.example.demo.repository.jjoo.queries.NumeroSedesPorPaisDTO;
+import com.example.demo.mapper.dto.SedesDTO;
 import com.example.demo.services.jjoo.PaisService;
 import com.example.demo.services.log.LogService;
 import io.reflectoring.api.PaisesApi;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -63,7 +62,7 @@ public class PaisController implements PaisesApi, SedesApi {
     @CrossOrigin(origins = "https://localhost:5173", allowCredentials = "true")
     @GetMapping("paises/{id}")
     public ResponseEntity<io.reflectoring.model.Pais> paisesIdGet(@PathVariable Long id, @CookieValue(value = "user", defaultValue = "defaultUser") String user) {
-        Pais pais = paisService.getPaisById(id);
+        PaisDTO pais = paisService.getPaisById(id);
 
         if(pais != null) {
             if (user != null && !user.isEmpty()) {
@@ -77,12 +76,7 @@ public class PaisController implements PaisesApi, SedesApi {
                 System.out.println("No se encontró el usuario en la cookie");
             }
 
-            io.reflectoring.model.Pais result = new io.reflectoring.model.Pais();
-            result.setIDPAIS(pais.getId());
-            result.NOMBRE_PAIS(pais.getNombrePais());
-            result.CODIGO_PAIS(pais.getCodigoPais());
-            result.VALOR_PAIS(pais.getValorPais());
-
+            io.reflectoring.model.Pais result = paisMapper.toReflectoringPais(pais);
 
             return ResponseEntity.status(HttpStatus.OK).body(result);
         }
@@ -109,16 +103,17 @@ public class PaisController implements PaisesApi, SedesApi {
     public ResponseEntity<io.reflectoring.model.Pais> paisesAddPost(
             @Parameter(name = "user", description = "Cookie que contiene el nombre del usuario que realiza la solicitud", in = ParameterIn.COOKIE)
             @CookieValue(name = "user", required = false) String user,
-            @Parameter(name = "PaisesAddPostRequest", description = "")
+            @Parameter(name = "PaisesAddPostRequest")
             @Valid
             @RequestBody(required = false) PaisesAddPostRequest paisesAddPostRequest) {
-        System.out.println("AAA");
-        Pais newPais = new Pais();
+
+        PaisDTO newPais = new PaisDTO();
         newPais.setNombrePais(paisesAddPostRequest.getNOMBREPAIS());
         newPais.setCodigoPais(paisesAddPostRequest.getCODIGOPAIS());
-        newPais.setValorPais(paisesAddPostRequest.getVALORPAIS().intValue());
-        Pais savedPais = paisService.savePais(newPais);
-        System.out.println("BBB");
+        newPais.setValorPais(paisesAddPostRequest.getVALORPAIS());
+
+        PaisDTO savedPais = paisService.savePais(paisMapper.toPais(newPais));
+
         if (user != null && !user.isEmpty()) {
             Log log = new Log(user, LocalDateTime.now(), "Pais added");
             try {
@@ -130,11 +125,7 @@ public class PaisController implements PaisesApi, SedesApi {
             System.out.println("No se encontró el usuario en la cookie");
         }
 
-        io.reflectoring.model.Pais result = new io.reflectoring.model.Pais();
-        result.setIDPAIS(savedPais.getId());
-        result.NOMBRE_PAIS(savedPais.getNombrePais());
-        result.CODIGO_PAIS(savedPais.getCodigoPais());
-        result.VALOR_PAIS(savedPais.getValorPais());
+        io.reflectoring.model.Pais result = paisMapper.toReflectoringPais(savedPais);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
@@ -142,8 +133,8 @@ public class PaisController implements PaisesApi, SedesApi {
 
     @CrossOrigin(origins = "https://localhost:5173", allowCredentials = "true")
     @GetMapping("paises/codigo/{codigo}")
-    public ResponseEntity<List<io.reflectoring.model.Pais>> paisesCodigoCodigoGet(@PathVariable String codigo, @CookieValue(value = "user", defaultValue = "defaultUser") String user) {
-        Pais pais = paisService.findByCodigo(codigo);
+    public ResponseEntity<io.reflectoring.model.Pais> paisesCodigoCodigoGet(@PathVariable String codigo, @CookieValue(value = "user", defaultValue = "defaultUser") String user) {
+        PaisDTO pais = paisService.findByCodigo(codigo);
 
         if (pais != null) {
             if (user != null && !user.isEmpty()) {
@@ -157,17 +148,9 @@ public class PaisController implements PaisesApi, SedesApi {
                 System.out.println("No se encontró el usuario en la cookie");
             }
 
-            io.reflectoring.model.Pais result = new io.reflectoring.model.Pais();
-            result.setIDPAIS(pais.getId());
-            result.NOMBRE_PAIS(pais.getNombrePais());
-            result.CODIGO_PAIS(pais.getCodigoPais());
-            result.VALOR_PAIS(pais.getValorPais());
+            io.reflectoring.model.Pais result = paisMapper.toReflectoringPais(pais);
 
-            List resultList = new ArrayList();
-
-            resultList.add(result);
-
-            return ResponseEntity.status(HttpStatus.OK).body(resultList);
+            return ResponseEntity.status(HttpStatus.OK).body(result);
         } else {
             if (user != null && !user.isEmpty()) {
                 Log log = new Log(user, LocalDateTime.now(), "Get pais by code");
@@ -186,7 +169,7 @@ public class PaisController implements PaisesApi, SedesApi {
     @CrossOrigin(origins = "https://localhost:5173", allowCredentials = "true")
     @PutMapping("paises/update/{id}")
     public ResponseEntity<io.reflectoring.model.Pais> paisesUpdateIdPut(@PathVariable long id, @RequestBody Pais pais, @CookieValue(value = "user", defaultValue = "defaultUser") String user) {
-        Pais savedPais = paisService.updatePais(id, pais);
+        PaisDTO savedPais = paisService.updatePais(id, pais);
 
         if (user != null && !user.isEmpty()) {
             Log log = new Log(user, LocalDateTime.now(), "Pais updated");
@@ -215,7 +198,7 @@ public class PaisController implements PaisesApi, SedesApi {
     @CrossOrigin(origins = "https://localhost:5173", allowCredentials = "true")
     @GetMapping("sedes")
     public ResponseEntity<List<SedesInner>> sedesGet(@CookieValue(value = "user", defaultValue = "defaultUser") String user) {
-        List<NumeroSedesPorPaisDTO> sedes = paisService.getSedesQuery();
+        List<SedesDTO> sedes = paisService.getSedesQuery();
 
         if (user != null && !user.isEmpty()) {
             Log log = new Log(user, LocalDateTime.now(), "Get sedes");
@@ -228,16 +211,7 @@ public class PaisController implements PaisesApi, SedesApi {
             System.out.println("No se encontró el usuario en la cookie");
         }
 
-        List<io.reflectoring.model.SedesInner> result = sedes.stream().map(x -> {
-            io.reflectoring.model.SedesInner sedesInner = new io.reflectoring.model.SedesInner();
-            sedesInner.setIDPAIS(x.getID_PAIS());
-            sedesInner.setNOMBREPAIS(x.getNOMBRE_PAIS());
-            sedesInner.setIDCIUDAD(x.getID_CIUDAD());
-            sedesInner.setVALORCIUDAD(x.getVALOR_CIUDAD());
-            sedesInner.setDESCRIPCIONTIPO(x.getDESCRIPCION_TIPO());
-            sedesInner.setCOUNTSEDES(x.getCOUNT_SEDES());
-            return sedesInner;
-        }).toList();
+        List<io.reflectoring.model.SedesInner> result = sedes.stream().map(paisMapper::toSedesInner).toList();
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }

@@ -87,7 +87,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Paises'
+                $ref: '#/components/schemas/Pais'
         '404':
           description: Not found
   
