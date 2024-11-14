@@ -6,10 +6,10 @@ import path from 'path';
 export default defineConfig({
   plugins: [react()],
   server: {
-    /*https: {
+    https: {
       key: fs.readFileSync(path.resolve(__dirname, 'localhost-key.pem')),
       cert: fs.readFileSync(path.resolve(__dirname, 'localhost.pem')),
-    },*/
+    },
     port: 3000,
     host:true
   },

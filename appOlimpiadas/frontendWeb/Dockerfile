@@ -56,10 +56,10 @@ FROM base as final
 ENV NODE_ENV production
 
 # Cambiar a root temporalmente para modificar permisos
-USER root
+#USER root
 
 # Cambiar permisos de node_modules
-RUN chmod -R 755 /usr/src/app
+#RUN chmod -R 755 /usr/src/app
 #RUN chown -R node:node /usr/src/app
 
 # Volver al usuario no root
