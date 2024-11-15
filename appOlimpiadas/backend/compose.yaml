@@ -11,6 +11,8 @@ services:
       - "3307:3306"
     networks:
       - app-network
+    volumes:
+      - mysql-data:/var/lib/mysql
 
   mongo:
     image: mongo:latest
@@ -18,9 +20,11 @@ services:
     environment:
       MONGO_INITDB_DATABASE: users
     ports:
-      - "27017:27017"
+      - "27018:27017"
     networks:
       - app-network
+    volumes:
+      - mongo-data:/data/db
 
   server:
     build:
@@ -43,6 +47,11 @@ services:
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  mysql-data:
+  mongo-data:
+
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to

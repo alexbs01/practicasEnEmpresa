@@ -21,7 +21,6 @@ public class LoginController {
     @Autowired
     private LogService logService;
 
-    @CrossOrigin(origins = "https://localhost:5173")
     @PostMapping("login")
     public ResponseEntity<Login> logUser(@RequestBody Login login) {
         boolean isLogged = loginService.login(login);
@@ -41,7 +40,6 @@ public class LoginController {
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
-    @CrossOrigin(origins = "https://localhost:5173")
     @GetMapping("logins")
     public ResponseEntity<List<Login>> getLogins() {
         List<Login> loggins = loginService.getAllLogins();
@@ -49,7 +47,6 @@ public class LoginController {
         return new ResponseEntity<>(loggins, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "https://localhost:5173")
     @PostMapping("register")
     public ResponseEntity<Login> registerUser(@RequestBody Login login) {
         boolean userCanBeRegister = loginService.register(login);
