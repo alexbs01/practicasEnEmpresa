@@ -2,6 +2,7 @@ package com.example.demo.controllers.login;
 
 import com.example.demo.entitites.log.Log;
 import com.example.demo.entitites.login.Login;
+import com.example.demo.services.kafka.KafkaProducerService;
 import com.example.demo.services.log.LogService;
 import com.example.demo.services.login.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class LoginController {
     @Autowired
     private LogService logService;
 
+    @Autowired
+    private KafkaProducerService kafkaProducerService;
+
     @PostMapping("login")
     public ResponseEntity<Login> logUser(@RequestBody Login login) {
         boolean isLogged = loginService.login(login);
@@ -29,6 +33,7 @@ public class LoginController {
         Log log = new Log(login.getUsername(), LocalDateTime.now(), action);
         try {
             logService.save(log);
+            kafkaProducerService.logUserLogin(login.getUsername());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
