@@ -33,7 +33,7 @@ public class LoginController {
         Log log = new Log(login.getUsername(), LocalDateTime.now(), action);
         try {
             logService.save(log);
-            kafkaProducerService.logUserLogin(login.getUsername());
+            kafkaProducerService.logUserLogin(login.getUsername(), action);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -60,6 +60,7 @@ public class LoginController {
         Log log = new Log(login.getUsername(), LocalDateTime.now(), action);
         try {
             logService.save(log);
+            kafkaProducerService.logUserLogin(login.getUsername(), action);
         } catch (InterruptedException e) {
                 throw new RuntimeException(e);
         }

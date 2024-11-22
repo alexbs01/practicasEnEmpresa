@@ -6,6 +6,7 @@ import com.example.demo.mapper.PaisMapper;
 import com.example.demo.mapper.dto.PaisDTO;
 import com.example.demo.mapper.dto.SedesDTO;
 import com.example.demo.services.jjoo.PaisService;
+import com.example.demo.services.kafka.KafkaProducerService;
 import com.example.demo.services.log.LogService;
 import io.reflectoring.api.PaisesApi;
 import io.reflectoring.api.SedesApi;
@@ -13,6 +14,7 @@ import io.reflectoring.model.PaisesAddPostRequest;
 import io.reflectoring.model.SedesInner;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import org.apache.kafka.clients.producer.KafkaProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,9 @@ public class PaisController implements PaisesApi, SedesApi {
     @Autowired
     private PaisMapper paisMapper;
 
+    @Autowired
+    private KafkaProducerService kafkaProducerService;
+
     @CrossOrigin(origins = "https://localhost:5173", allowCredentials = "true")
     @RequestMapping("/paises")
     public ResponseEntity<List<io.reflectoring.model.Pais>> paisesGet(@CookieValue(value = "user", defaultValue = "defaultUser") String user) {
@@ -44,6 +49,7 @@ public class PaisController implements PaisesApi, SedesApi {
             Log log = new Log(user, LocalDateTime.now(), "Get all paises");
             try {
                 logService.save(log);
+                kafkaProducerService.logUserLogin(user, "Get all paises");
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -69,6 +75,7 @@ public class PaisController implements PaisesApi, SedesApi {
                 Log log = new Log(user, LocalDateTime.now(), "Get pais by id");
                 try {
                     logService.save(log);
+                    kafkaProducerService.logUserLogin(user, "Get pais by id");
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -118,6 +125,8 @@ public class PaisController implements PaisesApi, SedesApi {
             Log log = new Log(user, LocalDateTime.now(), "Pais added");
             try {
                 logService.save(log);
+                kafkaProducerService.logUserLogin(user, "Pais added");
+
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -141,6 +150,7 @@ public class PaisController implements PaisesApi, SedesApi {
                 Log log = new Log(user, LocalDateTime.now(), "Get pais by code");
                 try {
                     logService.save(log);
+                    kafkaProducerService.logUserLogin(user, "Get pais by code");
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -156,6 +166,7 @@ public class PaisController implements PaisesApi, SedesApi {
                 Log log = new Log(user, LocalDateTime.now(), "Get pais by code");
                 try {
                     logService.save(log);
+                    kafkaProducerService.logUserLogin(user, "Get pais by code");
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -175,6 +186,7 @@ public class PaisController implements PaisesApi, SedesApi {
             Log log = new Log(user, LocalDateTime.now(), "Pais updated");
             try {
                 logService.save(log);
+                kafkaProducerService.logUserLogin(user, "Pais updated");
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -204,6 +216,7 @@ public class PaisController implements PaisesApi, SedesApi {
             Log log = new Log(user, LocalDateTime.now(), "Get sedes");
             try {
                 logService.save(log);
+                kafkaProducerService.logUserLogin(user, "Get sedes");
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

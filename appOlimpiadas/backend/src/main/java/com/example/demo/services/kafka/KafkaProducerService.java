@@ -16,15 +16,16 @@ public class KafkaProducerService {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
-    public void logUserLogin(String username) {
+    public void logUserLogin(String username, String action) {
         Map<String, String> loginEvent = new HashMap<>();
         loginEvent.put("username", username);
+        loginEvent.put("action", action);
         loginEvent.put("timestamp", LocalDateTime.now().toString());
 
         String message = loginEvent.toString();
 
         kafkaTemplate.send(TOPIC, username, message);
-        System.out.printf("Login registrado: %s%n", message);
+        System.out.printf("Acción registrada: %s%n", message);
     }
 }
 
